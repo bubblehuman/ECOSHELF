@@ -1,0 +1,322 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Eco Shelf — Smart surplus marketplace connecting local retailers with NGOs to reduce waste.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{title} | EcoShelf</title>
+
+    <!-- Supabase -->
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script is:inline>
+      window.SUPABASE_URL      = 'YOUR_SUPABASE_URL';
+      window.SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+      window.supa = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    </script>
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-cream font-grotesk text-ink overflow-x-hidden">
+
+    <!-- ═══════════════════════════════════════════
+         PAGE TRANSITION OVERLAY (enter animation)
+         ═══════════════════════════════════════════ -->
+    <script is:inline>
+      // Run immediately so overlay appears before paint
+      (function() {
+        const color = sessionStorage.getItem('eco_transition_color');
+        const ox    = parseFloat(sessionStorage.getItem('eco_transition_x') || '50');
+        const oy    = parseFloat(sessionStorage.getItem('eco_transition_y') || '50');
+        if (!color) return;
+        sessionStorage.removeItem('eco_transition_color');
+        sessionStorage.removeItem('eco_transition_x');
+        sessionStorage.removeItem('eco_transition_y');
+
+        const maxDim = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2) * 2.2 + 'px';
+        const el = document.createElement('div');
+        el.id = 'page-transition-overlay';
+        Object.assign(el.style, {
+          left: ox + 'px', top: oy + 'px',
+          width: maxDim, height: maxDim,
+          background: color,
+          border: '4px solid #0D0D0D',
+        });
+        document.documentElement.appendChild(el);
+
+        // Collapse the circle inward after a brief moment
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.style.width  = '0px';
+            el.style.height = '0px';
+            setTimeout(() => el.remove(), 500);
+          });
+        });
+      })();
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         STICKY NAVBAR
+         ═══════════════════════════════════════════ -->
+    <nav
+      x-data="navbarComponent()"
+      x-init="init()"
+      class="sticky top-0 z-50 bg-lime border-b-4 border-ink"
+    >
+      <div class="brutal-section">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+
+          <!-- Logo -->
+          <button
+            onclick="navigateTo(event,'/', '#7DF9FF')"
+            class="flex items-center gap-2 group cursor-pointer bg-transparent border-none p-0"
+          >
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-ink border-4 border-ink flex items-center justify-center
+                        shadow-brutal-sm group-hover:animate-wobble transition-all">
+              <span class="text-xl sm:text-2xl">🌿</span>
+            </div>
+            <span class="text-xl sm:text-2xl font-black tracking-tight text-ink">
+              Eco<span class="text-white" style="-webkit-text-stroke:1px #0D0D0D;">Shelf</span>
+            </span>
+          </button>
+
+          <!-- Desktop Nav -->
+          <div class="hidden md:flex items-center gap-3">
+            <button onclick="navigateTo(event,'/browse','#FFD700')"
+              class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
+                     hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none
+                     transition-all cursor-pointer">
+              Browse
+            </button>
+            <button onclick="navigateTo(event,'/dashboard','#7DF9FF')"
+              class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
+                     hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none
+                     transition-all cursor-pointer">
+              Dashboard
+            </button>
+
+            <template x-if="!user">
+              <button onclick="navigateTo(event,'/auth','#FF6EC7')"
+                class="brutal-btn text-sm">
+                Login / Sign Up →
+              </button>
+            </template>
+            <template x-if="user">
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-2 bg-white border-4 border-ink font-bold text-sm shadow-brutal-sm"
+                  x-text="userEmail"></span>
+                <button @click="logout()"
+                  class="px-4 py-2 font-black border-4 border-ink bg-orange text-white shadow-brutal-sm
+                         hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                  Logout
+                </button>
+              </div>
+            </template>
+          </div>
+
+          <!-- Hamburger -->
+          <button @click="mobileOpen = !mobileOpen"
+            class="md:hidden p-2 border-4 border-ink bg-white shadow-brutal-sm
+                   hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path x-show="!mobileOpen" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+              <path x-show="mobileOpen" x-cloak stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileOpen" x-cloak
+          x-transition:enter="transition ease-out duration-150"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          class="md:hidden border-t-4 border-ink pb-4 space-y-3 pt-4">
+          <button onclick="navigateTo(event,'/browse','#FFD700')"
+            class="block w-full px-4 py-3 font-black border-4 border-ink bg-yellow text-center shadow-brutal-sm
+                   hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+            Browse Listings
+          </button>
+          <button onclick="navigateTo(event,'/dashboard','#7DF9FF')"
+            class="block w-full px-4 py-3 font-black border-4 border-ink bg-cyan text-center shadow-brutal-sm
+                   hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+            Dashboard
+          </button>
+          <template x-if="!user">
+            <button onclick="navigateTo(event,'/auth','#FF6EC7')"
+              class="block w-full brutal-btn text-center">
+              Login / Sign Up
+            </button>
+          </template>
+          <template x-if="user">
+            <div class="space-y-2">
+              <div class="px-4 py-2 bg-white border-4 border-ink font-bold text-sm text-center"
+                x-text="userEmail"></div>
+              <button @click="logout()"
+                class="w-full px-4 py-3 font-black border-4 border-ink bg-orange text-white shadow-brutal-sm
+                       hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                Logout
+              </button>
+            </div>
+          </template>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1"><slot /></main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="bg-ink text-white border-t-4 border-ink mt-0">
+      <!-- Zigzag accent -->
+      <div class="zigzag"></div>
+
+      <div class="brutal-section py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="sm:col-span-2 lg:col-span-1">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-10 h-10 bg-lime border-4 border-white flex items-center justify-center">
+                <span class="text-xl">🌿</span>
+              </div>
+              <span class="text-xl font-black">Eco<span class="text-lime">Shelf</span></span>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Bridging retail surplus and community need. Reducing waste, one listing at a time.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-black text-lg mb-4 text-lime uppercase">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><button onclick="navigateTo(event,'/browse','#FFD700')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Browse Marketplace</button></li>
+              <li><button onclick="navigateTo(event,'/dashboard','#7DF9FF')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Dashboard</button></li>
+              <li><button onclick="navigateTo(event,'/auth','#FF6EC7')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Login / Register</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-black text-lg mb-4 text-yellow uppercase">For Businesses</h4>
+            <ul class="space-y-2 text-sm">
+              <li><button onclick="navigateTo(event,'/auth','#FFD700')" class="text-gray-400 hover:text-yellow transition-colors bg-transparent border-none cursor-pointer">Register as Retailer</button></li>
+              <li><button onclick="navigateTo(event,'/dashboard','#FFD700')" class="text-gray-400 hover:text-yellow transition-colors bg-transparent border-none cursor-pointer">List Surplus</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-black text-lg mb-4 text-orange uppercase">For NGOs</h4>
+            <ul class="space-y-2 text-sm">
+              <li><button onclick="navigateTo(event,'/auth','#FF6B35')" class="text-gray-400 hover:text-orange transition-colors bg-transparent border-none cursor-pointer">Register as NGO</button></li>
+              <li><button onclick="navigateTo(event,'/browse','#FF6B35')" class="text-gray-400 hover:text-orange transition-colors bg-transparent border-none cursor-pointer">Browse Items</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-10 pt-6 border-t-2 border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p class="text-gray-400 text-sm">&copy; 2026 EcoShelf. Built for a sustainable future. 🌍</p>
+          <div class="comic-caption text-xs">Zero waste. Maximum impact.</div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         NAVBAR ALPINE COMPONENT
+         ═══════════════════════════════════════════ -->
+    <script is:inline>
+      function navbarComponent() {
+        return {
+          mobileOpen: false, user: null, userEmail: '',
+          async init() {
+            try {
+              const { data } = await window.supa.auth.getUser();
+              if (data.user) { this.user = data.user; this.userEmail = data.user.email || ''; }
+            } catch(e) {}
+            window.supa.auth.onAuthStateChange((_e, session) => {
+              this.user = session?.user || null;
+              this.userEmail = session?.user?.email || '';
+            });
+          },
+          async logout() {
+            await window.supa.auth.signOut();
+            navigateTo({ currentTarget: document.body }, '/', '#ADFF2F');
+          },
+        };
+      }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         GLOBAL PAGE TRANSITION ENGINE
+         ═══════════════════════════════════════════ -->
+    <script is:inline>
+      window.navigateTo = function(event, href, color) {
+        event.preventDefault && event.preventDefault();
+
+        const btn = event.currentTarget || event.target || document.body;
+        const rect = btn.getBoundingClientRect ? btn.getBoundingClientRect() : { left: window.innerWidth/2, top: window.innerHeight/2, width: 0, height: 0 };
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        // Add jelly animation to the button
+        if (btn && btn.style) {
+          btn.style.transition = 'transform 0.12s ease, box-shadow 0.12s ease';
+          btn.style.transform = 'scale(0.92)';
+          btn.style.boxShadow = 'none';
+          setTimeout(() => {
+            btn.style.transform = '';
+            btn.style.boxShadow = '';
+          }, 150);
+        }
+
+        // Create expanding circle overlay
+        const overlay = document.createElement('div');
+        overlay.id = 'page-transition-overlay';
+        Object.assign(overlay.style, {
+          left: cx + 'px',
+          top: cy + 'px',
+          width: '0px',
+          height: '0px',
+          background: color || '#ADFF2F',
+          border: '4px solid #0D0D0D',
+        });
+        document.body.appendChild(overlay);
+
+        // Save for next page's entrance
+        sessionStorage.setItem('eco_transition_color', color || '#ADFF2F');
+        sessionStorage.setItem('eco_transition_x', cx.toString());
+        sessionStorage.setItem('eco_transition_y', cy.toString());
+
+        // Expand to full viewport
+        const maxDim = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2) * 2.2 + 'px';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            overlay.style.width  = maxDim;
+            overlay.style.height = maxDim;
+          });
+        });
+
+        setTimeout(() => { window.location.href = href; }, 430);
+      };
+
+      // Scroll reveal observer
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      });
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  </body>
+</html>

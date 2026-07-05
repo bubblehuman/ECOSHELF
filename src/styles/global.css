@@ -1,0 +1,169 @@
+/* ============================================================
+   ECO SHELF — Global Styles (Neo-Brutalism + Cartoon)
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ── */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply font-grotesk antialiased;
+    background-color: #FFFDF7;
+    color: #0D0D0D;
+    min-height: 100vh;
+  }
+
+  [x-cloak] { display: none !important; }
+
+  ::selection { background: #ADFF2F; color: #0D0D0D; }
+}
+
+/* ── Components ── */
+@layer components {
+
+  /* Page section wrapper */
+  .brutal-section {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ─── Neo-Brutalist Cards ─── */
+  .brutal-card {
+    @apply bg-white transition-all duration-150;
+    border: 4px solid #0D0D0D;
+    box-shadow: 6px 6px 0px #0D0D0D;
+  }
+  .brutal-card:hover {
+    @apply translate-x-[3px] translate-y-[3px];
+    box-shadow: 0px 0px 0px #0D0D0D;
+  }
+
+  /* ─── Buttons ─── */
+  .brutal-btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold cursor-pointer select-none transition-all duration-100 hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none;
+    color: #0D0D0D;
+    background-color: #ADFF2F;
+    border: 4px solid #0D0D0D;
+    box-shadow: 4px 4px 0px #0D0D0D;
+  }
+  .brutal-btn:hover {
+    box-shadow: 0px 0px 0px #0D0D0D;
+  }
+  
+  .brutal-btn-orange { @apply brutal-btn text-white; background-color: #FF6B35; }
+  .brutal-btn-yellow { @apply brutal-btn; background-color: #FFD700; }
+  .brutal-btn-pink   { @apply brutal-btn text-white; background-color: #FF6EC7; }
+  .brutal-btn-cyan   { @apply brutal-btn; background-color: #7DF9FF; }
+  .brutal-btn-black  { @apply brutal-btn; background-color: #0D0D0D; color: #ADFF2F; }
+  .brutal-btn-white  { @apply brutal-btn bg-white; }
+
+  /* ─── Inputs ─── */
+  .brutal-input {
+    @apply w-full px-4 py-3 bg-white font-grotesk font-semibold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:ring-0 transition-shadow duration-150;
+    color: #0D0D0D;
+    border: 4px solid #0D0D0D;
+  }
+  .brutal-input:focus {
+    box-shadow: 4px 4px 0px #0D0D0D;
+  }
+  
+  .brutal-select {
+    @apply brutal-input appearance-none cursor-pointer pr-10;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'20' height%3D'20' viewBox%3D'0 0 24 24' fill%3D'none' stroke%3D'%230D0D0D' stroke-width%3D'3'%3E%3Cpath d%3D'M6 9l6 6 6-6'%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+  }
+
+  /* ─── Badges ─── */
+  .brutal-badge {
+    @apply inline-block px-3 py-1 text-xs font-black uppercase tracking-wider;
+    border: 2px solid #0D0D0D;
+  }
+
+  /* ─── Comic caption box ─── */
+  .comic-caption {
+    @apply inline-block px-4 py-2 font-black text-sm uppercase tracking-wide -rotate-1;
+    background-color: #FFD700;
+    border: 4px solid #0D0D0D;
+    box-shadow: 4px 4px 0px #0D0D0D;
+  }
+
+  /* ─── Speech bubble ─── */
+  .speech-bubble {
+    @apply relative bg-white p-4 font-bold;
+    border: 4px solid #0D0D0D;
+    box-shadow: 4px 4px 0px #0D0D0D;
+  }
+  .speech-bubble::after {
+    content: '';
+    @apply absolute -bottom-5 left-8 w-0 h-0;
+    border-left: 12px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 20px solid #0D0D0D;
+  }
+  .speech-bubble::before {
+    content: '';
+    @apply absolute -bottom-4 left-9 w-0 h-0;
+    border-left: 10px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 17px solid #ffffff;
+    z-index: 1;
+  }
+
+  /* ─── Zigzag divider ─── */
+  .zigzag {
+    background: linear-gradient(135deg, #0D0D0D 25%, transparent 25%) -10px 0,
+                linear-gradient(225deg, #0D0D0D 25%, transparent 25%) -10px 0,
+                linear-gradient(315deg, #0D0D0D 25%, transparent 25%),
+                linear-gradient(45deg,  #0D0D0D 25%, transparent 25%);
+    background-size: 20px 20px;
+    background-color: #ADFF2F;
+    height: 20px;
+    width: 100%;
+  }
+}
+
+/* ── Page Transition Overlay ── */
+#page-transition-overlay {
+  position: fixed;
+  border-radius: 50%;
+  z-index: 99999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Cartoon text shadow ── */
+.text-stroke {
+  -webkit-text-stroke: 2px #0D0D0D;
+  paint-order: stroke fill;
+}
+
+/* ── Marquee ticker ── */
+.ticker-wrap {
+  overflow: hidden;
+  border-top: 4px solid #0D0D0D;
+  border-bottom: 4px solid #0D0D0D;
+  background: #0D0D0D;
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}

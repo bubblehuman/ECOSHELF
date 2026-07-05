@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Rescue Surplus. Reduce Waste.">
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 1 — THE PROBLEM (Dark, Dramatic Opening)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center">
+    <!-- Floating background blobs -->
+    <div class="absolute top-10 left-8 text-[8rem] opacity-10 animate-floatBob select-none pointer-events-none">🗑️</div>
+    <div class="absolute bottom-20 right-12 text-[6rem] opacity-10 animate-floatBob select-none pointer-events-none" style="animation-delay:1.5s">🍞</div>
+    <div class="absolute top-1/3 right-1/4 text-[5rem] opacity-10 animate-floatBob select-none pointer-events-none" style="animation-delay:0.8s">🥦</div>
+
+    <div class="brutal-section py-20 relative z-10">
+      <div class="max-w-4xl">
+        <!-- Comic caption -->
+        <div class="comic-caption mb-8 text-xs inline-block reveal">
+          📖 Chapter 1: The Crisis
+        </div>
+
+        <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black text-white leading-none mb-6 reveal" style="animation-delay:0.1s">
+          Every day,<br />
+          <span class="text-lime" style="-webkit-text-stroke:2px #ADFF2F; color:#ADFF2F">
+            1.3 BILLION
+          </span><br />
+          <span class="text-white">tons of food</span><br />
+          <span class="text-orange">goes to waste.</span>
+        </h1>
+
+        <p class="text-xl sm:text-2xl text-gray-300 max-w-2xl mb-10 leading-relaxed reveal" style="animation-delay:0.2s">
+          While supermarkets throw out <strong class="text-yellow">perfectly good food</strong>, families go hungry
+          and NGOs scramble for resources. The gap is <strong class="text-orange">criminal.</strong>
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 reveal" style="animation-delay:0.3s">
+          <button
+            onclick="navigateTo(event, '/auth', '#ADFF2F')"
+            class="brutal-btn text-lg px-8 py-4 text-xl font-black hover:animate-wobble"
+          >
+            🌿 Join the Solution
+          </button>
+          <button
+            onclick="navigateTo(event, '/browse', '#FFD700')"
+            class="brutal-btn-yellow text-lg px-8 py-4 text-xl font-black hover:animate-wobble"
+          >
+            📦 Browse Surplus Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-center">
+      <p class="text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Scroll to see the story</p>
+      <div class="w-8 h-12 border-4 border-gray-400 mx-auto flex items-start justify-center pt-2">
+        <div class="w-2 h-3 bg-lime animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 2 — THE RETAILER'S DILEMMA (Yellow, Anxious)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-yellow border-b-8 border-ink overflow-hidden flex items-center">
+    <!-- Panel label -->
+    <div class="absolute top-0 left-0 bg-ink text-lime px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
+      📖 Chapter 2
+    </div>
+
+    <div class="brutal-section py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Illustration side -->
+        <div class="text-center reveal order-last lg:order-first">
+          <!-- Big cartoon shop scene -->
+          <div class="relative inline-block">
+            <div class="text-[10rem] sm:text-[14rem] animate-floatBob select-none">🏪</div>
+            <!-- Speech bubble from shop -->
+            <div class="speech-bubble absolute -top-4 -right-4 sm:-right-8 w-48 text-sm rotate-3 animate-bounceIn">
+              "We have 200 loaves expiring TONIGHT! 😰"
+            </div>
+          </div>
+        </div>
+
+        <!-- Text side -->
+        <div class="reveal">
+          <div class="comic-caption mb-6">Meanwhile, at a grocery store near you...</div>
+          <h2 class="text-5xl sm:text-6xl font-black text-ink leading-none mb-6">
+            Retailers are
+            <span class="bg-orange text-white px-2 py-1 inline-block -rotate-1">DROWNING</span>
+            in surplus.
+          </h2>
+          <p class="text-xl text-ink/80 leading-relaxed mb-6">
+            Grocery stores, restaurants, furniture shops, and hotels sit on mountains of
+            perfectly usable inventory — forced to <strong>throw it all away</strong> because
+            they have no fast, affordable way to move it.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <div class="brutal-card px-5 py-3 bg-white -rotate-1">
+              <span class="text-2xl">🥬</span>
+              <span class="font-black ml-2">Grocery</span>
+            </div>
+            <div class="brutal-card px-5 py-3 bg-white rotate-1">
+              <span class="text-2xl">🍽️</span>
+              <span class="font-black ml-2">Restaurant</span>
+            </div>
+            <div class="brutal-card px-5 py-3 bg-white -rotate-1">
+              <span class="text-2xl">🪑</span>
+              <span class="font-black ml-2">Furniture</span>
+            </div>
+            <div class="brutal-card px-5 py-3 bg-white rotate-2">
+              <span class="text-2xl">🏨</span>
+              <span class="font-black ml-2">Hotel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 3 — ENTER ECOSHELF (Lime, Heroic Moment)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-lime border-b-8 border-ink overflow-hidden flex items-center">
+    <div class="absolute top-0 left-0 bg-ink text-lime px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
+      📖 Chapter 3
+    </div>
+
+    <!-- Background star bursts -->
+    <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
+      <div class="absolute top-8 right-16 text-[3rem] opacity-40 rotate-12">⭐</div>
+      <div class="absolute bottom-24 left-8 text-[2rem] opacity-30 -rotate-6">✨</div>
+      <div class="absolute top-1/2 right-8 text-[4rem] opacity-30 rotate-45">💥</div>
+      <div class="absolute top-20 left-1/3 text-[2rem] opacity-20">⚡</div>
+    </div>
+
+    <div class="brutal-section py-24 relative z-10">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="comic-caption mb-6 bg-ink text-lime reveal">
+          ⚡ Then... a hero appeared.
+        </div>
+
+        <!-- Huge hero logo stamp -->
+        <div class="reveal mb-6" style="animation-delay:0.1s">
+          <div class="inline-block bg-ink border-4 border-ink p-8 shadow-brutal-xl -rotate-2 hover:rotate-0 transition-transform duration-300">
+            <span class="text-8xl sm:text-[10rem]">🌿</span>
+          </div>
+        </div>
+
+        <h2 class="text-6xl sm:text-8xl font-black text-ink leading-none mb-6 reveal" style="animation-delay:0.15s">
+          EcoShelf
+          <br />
+          <span class="text-white" style="-webkit-text-stroke:3px #0D0D0D">has entered</span>
+          <br />
+          the chat. 🦸
+        </h2>
+
+        <p class="text-xl sm:text-2xl text-ink/80 max-w-2xl mx-auto mb-8 leading-relaxed reveal" style="animation-delay:0.2s">
+          A <strong>hyperlocal marketplace</strong> that lets retailers instantly list surplus goods
+          at ultra-low prices — and automatically alerts nearby NGOs to claim them.
+        </p>
+
+        <!-- Feature pills -->
+        <div class="flex flex-wrap gap-4 justify-center reveal" style="animation-delay:0.25s">
+          <div class="brutal-card px-5 py-3 bg-white font-black text-lg -rotate-1 hover:animate-wobble">⚡ Instant listing</div>
+          <div class="brutal-card px-5 py-3 bg-white font-black text-lg rotate-1 hover:animate-wobble">📍 Hyperlocal alerts</div>
+          <div class="brutal-card px-5 py-3 bg-white font-black text-lg -rotate-2 hover:animate-wobble">💰 Ultra-low prices</div>
+          <div class="brutal-card px-5 py-3 bg-white font-black text-lg rotate-2 hover:animate-wobble">🔒 Zero backend</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 4 — THE RESCUE (Hot Pink, Heartwarming)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-pink border-b-8 border-ink overflow-hidden flex items-center">
+    <div class="absolute top-0 left-0 bg-ink text-pink px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
+      📖 Chapter 4
+    </div>
+
+    <div class="brutal-section py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Text side -->
+        <div class="reveal">
+          <div class="comic-caption mb-6 bg-white">
+            🤝 Heroes on the other side...
+          </div>
+          <h2 class="text-5xl sm:text-6xl font-black text-ink leading-none mb-6">
+            NGOs swoop in
+            <br />
+            <span class="bg-ink text-pink px-2 py-1 inline-block rotate-1">INSTANTLY.</span>
+          </h2>
+          <p class="text-xl text-ink/80 leading-relaxed mb-8">
+            Community organizations get real-time alerts for surplus matching their needs.
+            They claim resources, get a <strong>verification token</strong>, and collect —
+            often within the hour. <strong>Zero waste. Zero waiting.</strong>
+          </p>
+
+          <!-- Steps -->
+          <div class="space-y-4">
+            <div class="brutal-card bg-white p-4 flex items-center gap-4 -rotate-1 reveal" style="animation-delay:0.1s">
+              <div class="w-12 h-12 bg-ink text-white flex items-center justify-center font-black text-xl shrink-0">1</div>
+              <div><strong>NGO gets notified</strong> when matching surplus appears nearby</div>
+            </div>
+            <div class="brutal-card bg-white p-4 flex items-center gap-4 rotate-1 reveal" style="animation-delay:0.2s">
+              <div class="w-12 h-12 bg-lime border-4 border-ink flex items-center justify-center font-black text-xl shrink-0">2</div>
+              <div><strong>Claims the resource</strong> with one click — no forms, no bureaucracy</div>
+            </div>
+            <div class="brutal-card bg-white p-4 flex items-center gap-4 -rotate-1 reveal" style="animation-delay:0.3s">
+              <div class="w-12 h-12 bg-yellow border-4 border-ink flex items-center justify-center font-black text-xl shrink-0">3</div>
+              <div><strong>Gets a token</strong> and collects from the retailer. Done! 🎉</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Illustration -->
+        <div class="text-center reveal order-first lg:order-last">
+          <div class="relative inline-block">
+            <div class="text-[8rem] sm:text-[12rem] animate-floatBob">🤝</div>
+            <div class="speech-bubble absolute -top-8 -left-4 sm:-left-8 w-44 text-sm -rotate-2">
+              "We got 50 families fed today! ❤️"
+            </div>
+            <div class="absolute -bottom-4 right-0 brutal-badge bg-lime text-ink font-black text-base px-4 py-2 rotate-3 hover:animate-wobble">
+              +1,200 rescues! 🎊
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 5 — THE IMPACT (Cyan, Live Data)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative bg-cyan border-b-8 border-ink overflow-hidden">
+    <div class="absolute top-0 left-0 bg-ink text-cyan px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
+      📖 Chapter 5
+    </div>
+
+    <!-- Ticker tape -->
+    <div class="ticker-wrap py-3 mt-12">
+      <div class="ticker-track">
+        <span class="text-lime font-black text-lg mr-12 whitespace-nowrap">🌱 WASTE DIVERTED</span>
+        <span class="text-yellow font-black text-lg mr-12 whitespace-nowrap">🤝 COMMUNITIES FED</span>
+        <span class="text-pink font-black text-lg mr-12 whitespace-nowrap">🏪 RETAILERS SAVING MONEY</span>
+        <span class="text-white font-black text-lg mr-12 whitespace-nowrap">⚡ REAL-TIME ALERTS</span>
+        <span class="text-lime font-black text-lg mr-12 whitespace-nowrap">🌱 WASTE DIVERTED</span>
+        <span class="text-yellow font-black text-lg mr-12 whitespace-nowrap">🤝 COMMUNITIES FED</span>
+        <span class="text-pink font-black text-lg mr-12 whitespace-nowrap">🏪 RETAILERS SAVING MONEY</span>
+        <span class="text-white font-black text-lg mr-12 whitespace-nowrap">⚡ REAL-TIME ALERTS</span>
+      </div>
+    </div>
+
+    <div
+      x-data="counterBanner()"
+      x-init="init()"
+      class="brutal-section py-16"
+    >
+      <div class="text-center mb-12 reveal">
+        <div class="comic-caption bg-ink text-lime mb-4">📊 The numbers don't lie</div>
+        <h2 class="text-5xl sm:text-6xl font-black text-ink">The Impact So Far</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="brutal-card bg-lime p-8 text-center -rotate-1 hover:rotate-0 transition-transform reveal">
+          <div class="text-5xl sm:text-6xl font-black text-ink mb-2">
+            <span x-text="wasteDiverted.toLocaleString()">0</span><span class="text-3xl">lbs</span>
+          </div>
+          <div class="font-black uppercase text-sm tracking-wider">♻️ Waste Diverted</div>
+        </div>
+        <div class="brutal-card bg-yellow p-8 text-center rotate-1 hover:rotate-0 transition-transform reveal" style="animation-delay:0.1s">
+          <div class="text-5xl sm:text-6xl font-black text-ink mb-2">
+            <span x-text="activeListings">0</span>
+          </div>
+          <div class="font-black uppercase text-sm tracking-wider">📦 Active Listings</div>
+        </div>
+        <div class="brutal-card bg-orange p-8 text-center -rotate-1 hover:rotate-0 transition-transform reveal" style="animation-delay:0.2s">
+          <div class="text-5xl sm:text-6xl font-black text-white mb-2">
+            <span x-text="businesses">0</span>
+          </div>
+          <div class="font-black uppercase text-sm tracking-wider text-white">🏪 Businesses</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       🎬 PANEL 6 — YOUR TURN (Black, Big CTA)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center">
+    <div class="absolute top-0 left-0 bg-lime text-ink px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
+      📖 Your Chapter
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="absolute inset-0 pointer-events-none select-none">
+      <div class="absolute top-16 right-12 text-[6rem] opacity-20 animate-floatBob">⭐</div>
+      <div class="absolute bottom-16 left-8 text-[4rem] opacity-15 animate-floatBob" style="animation-delay:1s">🌟</div>
+    </div>
+
+    <div class="brutal-section py-24 relative z-10">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="comic-caption bg-lime text-ink mb-8 inline-block reveal">
+          🦸 Now it's YOUR turn to be the hero.
+        </div>
+
+        <h2 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white leading-none mb-6 reveal" style="animation-delay:0.1s">
+          Write
+          <span class="text-lime">your</span>
+          <br />
+          chapter.
+        </h2>
+
+        <p class="text-xl sm:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 reveal" style="animation-delay:0.2s">
+          Whether you're a <strong class="text-yellow">retailer</strong> sitting on surplus
+          or an <strong class="text-pink">NGO</strong> looking to rescue resources —
+          your story starts here.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto reveal" style="animation-delay:0.25s">
+          <!-- Retailer CTA -->
+          <button
+            onclick="navigateTo(event, '/auth', '#ADFF2F')"
+            class="brutal-card bg-lime p-8 text-center group cursor-pointer text-left hover:animate-wobble"
+          >
+            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🏪</div>
+            <h3 class="text-2xl font-black text-ink mb-2">I'm a Retailer</h3>
+            <p class="text-ink/70 text-sm mb-4">List surplus inventory in 60 seconds. Turn waste into impact.</p>
+            <div class="brutal-btn text-sm inline-flex">Start Listing →</div>
+          </button>
+
+          <!-- NGO CTA -->
+          <button
+            onclick="navigateTo(event, '/auth', '#FF6EC7')"
+            class="brutal-card bg-pink p-8 text-center group cursor-pointer text-left hover:animate-wobble"
+          >
+            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
+            <h3 class="text-2xl font-black text-ink mb-2">We're an NGO</h3>
+            <p class="text-ink/70 text-sm mb-4">Find surplus near you. Rescue resources. Feed communities.</p>
+            <div class="brutal-btn-yellow text-sm inline-flex">Start Rescuing →</div>
+          </button>
+        </div>
+
+        <!-- Browse link -->
+        <div class="mt-8 reveal" style="animation-delay:0.3s">
+          <button
+            onclick="navigateTo(event, '/browse', '#7DF9FF')"
+            class="text-gray-400 hover:text-lime font-black underline underline-offset-4 text-lg transition-colors bg-transparent border-none cursor-pointer"
+          >
+            Or just browse what's available now →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       CATEGORY GRID (mini section)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="bg-cream border-b-8 border-ink">
+    <div class="brutal-section py-16 sm:py-20">
+      <h2 class="text-4xl sm:text-5xl font-black text-center mb-4">
+        Browse by <span class="bg-lime px-2 -rotate-1 inline-block">Category</span>
+      </h2>
+      <p class="text-center text-ink/60 mb-12 max-w-md mx-auto font-semibold">
+        Explore surplus resources by type, rescued from businesses in your area.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <button onclick="navigateTo(event,'/browse?category=grocery','#ADFF2F')"
+          class="brutal-card p-8 text-center bg-white group hover:bg-lime cursor-pointer w-full reveal hover:animate-wobble">
+          <div class="text-7xl mb-4 group-hover:scale-125 transition-transform duration-200">🥬</div>
+          <h3 class="text-2xl font-black mb-2">Groceries</h3>
+          <p class="text-ink/60 text-sm">Fresh produce nearing best-by dates</p>
+        </button>
+        <button onclick="navigateTo(event,'/browse?category=restaurant','#FFD700')"
+          class="brutal-card p-8 text-center bg-white group hover:bg-yellow cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.1s">
+          <div class="text-7xl mb-4 group-hover:scale-125 transition-transform duration-200">🍽️</div>
+          <h3 class="text-2xl font-black mb-2">Restaurants</h3>
+          <p class="text-ink/60 text-sm">Prepared meals & catering surplus</p>
+        </button>
+        <button onclick="navigateTo(event,'/browse?category=furniture','#7DF9FF')"
+          class="brutal-card p-8 text-center bg-white group hover:bg-cyan cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.2s">
+          <div class="text-7xl mb-4 group-hover:scale-125 transition-transform duration-200">🪑</div>
+          <h3 class="text-2xl font-black mb-2">Furniture</h3>
+          <p class="text-ink/60 text-sm">Display models & overstock items</p>
+        </button>
+        <button onclick="navigateTo(event,'/browse?category=hotel','#FF6EC7')"
+          class="brutal-card p-8 text-center bg-white group hover:bg-pink cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.3s">
+          <div class="text-7xl mb-4 group-hover:scale-125 transition-transform duration-200">🏨</div>
+          <h3 class="text-2xl font-black mb-2">Hotels</h3>
+          <p class="text-ink/60 text-sm">Linens, toiletries & buffet surplus</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<script is:inline>
+  function counterBanner() {
+    return {
+      wasteDiverted: 0, activeListings: 0, businesses: 0,
+      targetWaste: 12450, targetListings: 37, targetBusinesses: 86,
+      async init() {
+        try {
+          const { count } = await window.supa.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'available');
+          if (count !== null) this.targetListings = count;
+        } catch(e) {}
+        this.animateCounter('wasteDiverted', this.targetWaste, 2000);
+        this.animateCounter('activeListings', this.targetListings, 1500);
+        this.animateCounter('businesses', this.targetBusinesses, 1800);
+      },
+      animateCounter(prop, target, dur) {
+        const t0 = performance.now();
+        const step = (t) => {
+          const p = Math.min((t - t0) / dur, 1);
+          this[prop] = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+          if (p < 1) requestAnimationFrame(step); else this[prop] = target;
+        };
+        requestAnimationFrame(step);
+      },
+    };
+  }
+</script>

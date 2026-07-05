@@ -1,0 +1,523 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Dashboard">
+  <section class="brutal-section py-8 sm:py-12">
+    <div x-data="dashboardComponent()" x-init="init()">
+
+      <!-- Loading -->
+      <div x-show="loading" x-cloak class="text-center py-20">
+        <div class="inline-block brutal-card bg-lime p-8 -rotate-3 animate-bounceIn">
+          <div class="text-6xl mb-4">🌿</div>
+          <p class="font-black text-xl">Loading dashboard...</p>
+        </div>
+      </div>
+
+      <!-- Not authenticated -->
+      <div x-show="!loading&&!user" x-cloak class="text-center py-20">
+        <div class="inline-block brutal-card bg-cream p-12 -rotate-2 hover:rotate-0 transition-transform">
+          <div class="text-8xl mb-6">🔒</div>
+          <h2 class="text-3xl font-black mb-4">Hold up!</h2>
+          <p class="text-ink/60 mb-6 font-semibold">You need to sign in to access your dashboard.</p>
+          <button onclick="navigateTo(event,'/auth','#FF6EC7')" class="brutal-btn text-lg font-black">
+            Login / Sign Up →
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard -->
+      <div x-show="!loading&&user" x-cloak>
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+          <div>
+            <div class="comic-caption inline-block mb-3"
+              x-text="userType==='retailer'?'🏪 Retailer HQ':'🤝 NGO Command Center'">
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-black">
+              <span x-text="userType==='retailer'?'Retailer':'NGO'"></span>
+              <span class="bg-lime px-2 py-1 inline-block -rotate-1">Dashboard</span>
+            </h1>
+            <p class="text-ink/60 font-semibold mt-2">
+              Welcome back, <strong class="text-ink" x-text="orgName"></strong> 👋
+            </p>
+          </div>
+          <div class="brutal-badge font-black text-base px-4 py-2"
+            :class="userType==='retailer'?'bg-lime':'bg-yellow'"
+            x-text="userType==='retailer'?'🏪 Retailer Account':'🤝 NGO Account'">
+          </div>
+        </div>
+
+        <!-- ══════════ RETAILER VIEW ══════════ -->
+        <div x-show="userType==='retailer'">
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+            <!-- Listing Form -->
+            <div class="lg:col-span-2">
+              <div class="brutal-card bg-white sticky top-24 overflow-hidden">
+                <!-- Form header -->
+                <div class="bg-lime border-b-4 border-ink px-6 py-5">
+                  <h2 class="text-2xl font-black">⚡ List Surplus Now</h2>
+                  <p class="text-ink/70 text-sm font-semibold">Fill in the details below</p>
+                </div>
+
+                <!-- Alerts -->
+                <div x-show="formSuccess" x-cloak class="mx-6 mt-5">
+                  <div class="bg-lime border-4 border-ink p-3 font-black text-sm shadow-brutal-sm rotate-1">
+                    ✅ <span x-text="formSuccess"></span>
+                  </div>
+                </div>
+                <div x-show="formError" x-cloak class="mx-6 mt-5">
+                  <div class="bg-orange border-4 border-ink p-3 font-black text-sm text-white shadow-brutal-sm -rotate-1">
+                    ⚠️ <span x-text="formError"></span>
+                  </div>
+                </div>
+
+                <form @submit.prevent="submitListing()" class="p-6 space-y-4">
+                  <div>
+                    <label class="block font-black text-sm uppercase tracking-wider mb-2">Item Title</label>
+                    <input x-model="newListing.title" type="text" required
+                      placeholder="e.g. 50 loaves of sourdough bread" class="brutal-input" />
+                  </div>
+
+                  <div>
+                    <label class="block font-black text-sm uppercase tracking-wider mb-2">Category</label>
+                    <select x-model="newListing.category" required class="brutal-select">
+                      <option value="" disabled>Pick a category...</option>
+                      <option value="grocery">🥬 Grocery</option>
+                      <option value="restaurant">🍽️ Restaurant</option>
+                      <option value="furniture">🪑 Furniture</option>
+                      <option value="hotel">🏨 Hotel</option>
+                    </select>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block font-black text-sm uppercase tracking-wider mb-2">Original $</label>
+                      <input x-model="newListing.original_price" type="number" step="0.01" min="0" required
+                        placeholder="0.00" class="brutal-input" />
+                    </div>
+                    <div>
+                      <label class="block font-black text-sm uppercase tracking-wider mb-2">Surplus $</label>
+                      <input x-model="newListing.surplus_price" type="number" step="0.01" min="0" required
+                        placeholder="0.00" class="brutal-input" />
+                    </div>
+                  </div>
+
+                  <!-- Savings preview -->
+                  <div x-show="newListing.original_price>0&&newListing.surplus_price>0"
+                    class="bg-lime border-4 border-ink p-3 text-center -rotate-1">
+                    <span class="font-black text-lg">
+                      🎯 <span x-text="Math.round((1-newListing.surplus_price/newListing.original_price)*100)+'% savings!'"></span>
+                    </span>
+                  </div>
+
+                  <div>
+                    <label class="block font-black text-sm uppercase tracking-wider mb-2">Expires In</label>
+                    <select x-model="newListing.expiryHours" required class="brutal-select">
+                      <option value="" disabled>Select window...</option>
+                      <option value="1">1 hour ⚡</option>
+                      <option value="2">2 hours</option>
+                      <option value="4">4 hours</option>
+                      <option value="6">6 hours</option>
+                      <option value="12">12 hours</option>
+                      <option value="24">24 hours</option>
+                      <option value="48">48 hours</option>
+                      <option value="72">72 hours</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block font-black text-sm uppercase tracking-wider mb-2">Description</label>
+                    <textarea x-model="newListing.description" rows="3"
+                      placeholder="Quantity, condition, pickup instructions..."
+                      class="brutal-input resize-none"></textarea>
+                  </div>
+
+                  <button type="submit"
+                    onclick="if(!this.disabled){ const c=this; c.style.transform='scale(0.95)'; setTimeout(()=>c.style.transform='',150); }"
+                    :disabled="submitting"
+                    class="brutal-btn w-full text-lg font-black"
+                    :class="submitting?'opacity-60 cursor-wait':''">
+                    <span x-show="!submitting">🚀 Publish Listing!</span>
+                    <span x-show="submitting" x-cloak>Publishing... ⏳</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Active Inventory Table -->
+            <div class="lg:col-span-3">
+              <div class="brutal-card bg-white overflow-hidden">
+                <div class="bg-cream border-b-4 border-ink px-6 py-5 flex items-center justify-between">
+                  <h2 class="text-2xl font-black">📦 Active Inventory</h2>
+                  <button @click="fetchMyListings()"
+                    onclick="this.style.transform='rotate(360deg)'; this.style.transition='transform 0.4s ease'; setTimeout(()=>{this.style.transform='';this.style.transition=''},500)"
+                    class="px-4 py-2 bg-white border-4 border-ink font-black text-sm shadow-brutal-sm
+                           hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                    ↻ Refresh
+                  </button>
+                </div>
+
+                <!-- Empty -->
+                <div x-show="myListings.length===0&&!inventoryLoading" class="p-12 text-center">
+                  <div class="text-6xl mb-4">📋</div>
+                  <p class="text-ink/60 font-semibold">No listings yet. Create your first one! 👆</p>
+                </div>
+
+                <!-- Loading -->
+                <div x-show="inventoryLoading" x-cloak class="p-8 text-center">
+                  <p class="font-black text-ink/60 animate-pulse">Loading inventory...</p>
+                </div>
+
+                <!-- Table -->
+                <div x-show="myListings.length>0&&!inventoryLoading" class="overflow-x-auto">
+                  <table class="w-full text-left">
+                    <thead class="bg-ink text-white">
+                      <tr>
+                        <th class="px-4 py-3 font-black text-sm uppercase tracking-wider">Item</th>
+                        <th class="px-4 py-3 font-black text-sm uppercase tracking-wider">Price</th>
+                        <th class="px-4 py-3 font-black text-sm uppercase tracking-wider">Expires</th>
+                        <th class="px-4 py-3 font-black text-sm uppercase tracking-wider">Status</th>
+                        <th class="px-4 py-3 font-black text-sm uppercase tracking-wider">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <template x-for="item in myListings" :key="item.id">
+                        <tr class="border-b-2 border-ink hover:bg-cream transition-colors">
+                          <td class="px-4 py-3">
+                            <div class="font-black" x-text="item.title"></div>
+                            <div class="text-xs text-ink/50 font-semibold uppercase" x-text="item.category"></div>
+                          </td>
+                          <td class="px-4 py-3">
+                            <span class="text-ink/40 line-through text-sm font-bold">
+                              $<span x-text="parseFloat(item.original_price).toFixed(2)"></span>
+                            </span><br/>
+                            <span class="font-black">$<span x-text="parseFloat(item.surplus_price).toFixed(2)"></span></span>
+                          </td>
+                          <td class="px-4 py-3 text-sm font-semibold text-ink/70" x-text="formatExpiry(item.expiry_time)"></td>
+                          <td class="px-4 py-3">
+                            <span class="brutal-badge font-black text-xs"
+                              :class="item.status==='available'?'bg-lime':'bg-yellow'"
+                              x-text="item.status==='available'?'✅ Available':'🏆 Claimed'">
+                            </span>
+                          </td>
+                          <td class="px-4 py-3">
+                            <button x-show="item.status==='available'"
+                              @click="deleteListing(item.id)"
+                              class="px-3 py-1.5 bg-orange text-white border-2 border-ink font-black text-xs shadow-brutal-sm
+                                     hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">
+                              Remove
+                            </button>
+                            <span x-show="item.status==='claimed'" class="text-xs text-ink/50 font-bold">🎊 Done!</span>
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ NGO VIEW ══════════ -->
+        <div x-show="userType==='ngo'">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left: Map + Alerts -->
+            <div class="lg:col-span-1 space-y-6">
+
+              <!-- Distance -->
+              <div class="brutal-card bg-white overflow-hidden">
+                <div class="bg-yellow border-b-4 border-ink px-6 py-4">
+                  <h2 class="text-xl font-black">📍 Location & Range</h2>
+                </div>
+                <div class="p-6 space-y-5">
+                  <!-- Map placeholder -->
+                  <div class="w-full h-44 bg-cream border-4 border-ink relative overflow-hidden">
+                    <div class="absolute inset-0"
+                      style="background-image: repeating-linear-gradient(0deg,#0D0D0D22 0,#0D0D0D22 1px,transparent 1px,transparent 30px),repeating-linear-gradient(90deg,#0D0D0D22 0,#0D0D0D22 1px,transparent 1px,transparent 30px);">
+                    </div>
+                    <div class="absolute top-5 left-8 w-4 h-4 rounded-full bg-lime border-2 border-ink animate-bounceIn"></div>
+                    <div class="absolute top-14 right-10 w-3 h-3 rounded-full bg-orange border-2 border-ink animate-bounceIn" style="animation-delay:0.2s"></div>
+                    <div class="absolute bottom-10 left-1/3 w-3 h-3 rounded-full bg-yellow border-2 border-ink animate-bounceIn" style="animation-delay:0.4s"></div>
+                    <div class="absolute top-1/2 right-1/4 w-2 h-2 rounded-full bg-pink border-2 border-ink animate-bounceIn" style="animation-delay:0.6s"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="text-center brutal-card bg-white px-3 py-2 -rotate-2">
+                        <div class="text-2xl">🗺️</div>
+                        <p class="text-xs font-black">Map View</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slider -->
+                  <div>
+                    <label class="block font-black text-sm uppercase tracking-wider mb-2">
+                      Search Radius:
+                      <span class="text-orange" x-text="searchRadius+' miles'"></span>
+                    </label>
+                    <input x-model="searchRadius" type="range" min="1" max="25"
+                      class="w-full h-3 cursor-pointer accent-lime" />
+                    <div class="flex justify-between text-xs font-black text-ink/50 mt-1">
+                      <span>1 mi</span><span>25 mi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Alert Config -->
+              <div class="brutal-card bg-white overflow-hidden">
+                <div class="bg-orange border-b-4 border-ink px-6 py-4">
+                  <h2 class="text-xl font-black text-white">🔔 Alert Preferences</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                  <p class="text-sm text-ink/60 font-semibold">Get notified when matching items pop up!</p>
+
+                  <!-- Category checks -->
+                  <div class="space-y-2">
+                    <template x-for="cat in alertOptions" :key="cat.id">
+                      <label class="flex items-center gap-3 p-3 border-4 border-ink cursor-pointer hover:bg-cream transition-colors hover:animate-wobble">
+                        <input type="checkbox" x-model="alertCategories" :value="cat.id" class="w-5 h-5 accent-lime" />
+                        <span class="font-black text-sm" x-text="cat.emoji+' '+cat.label"></span>
+                      </label>
+                    </template>
+                  </div>
+
+                  <!-- Notify method -->
+                  <div class="grid grid-cols-2 gap-3">
+                    <button type="button" @click="alertMethod='email'"
+                      :class="alertMethod==='email'
+                        ? 'bg-yellow border-ink shadow-none translate-x-[2px] translate-y-[2px]'
+                        : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
+                      class="p-3 border-4 text-center font-black text-sm transition-all">
+                      📧 Email
+                    </button>
+                    <button type="button" @click="alertMethod='browser'"
+                      :class="alertMethod==='browser'
+                        ? 'bg-cyan border-ink shadow-none translate-x-[2px] translate-y-[2px]'
+                        : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
+                      class="p-3 border-4 text-center font-black text-sm transition-all">
+                      🔔 Browser
+                    </button>
+                  </div>
+
+                  <button @click="saveAlertPrefs()"
+                    onclick="this.classList.add('animate-wobble'); setTimeout(()=>this.classList.remove('animate-wobble'),600)"
+                    class="brutal-btn-yellow w-full font-black">
+                    💾 Save Prefs
+                  </button>
+
+                  <div x-show="alertSaved" x-cloak
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-75 rotate-6"
+                    x-transition:enter-end="opacity-100 scale-100 rotate-0"
+                    class="text-center font-black text-sm bg-lime border-4 border-ink p-3 -rotate-1">
+                    ✅ Preferences saved! 🎊
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Claimed Rescues -->
+            <div class="lg:col-span-2">
+              <!-- Stats row -->
+              <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="brutal-card bg-lime p-5 text-center -rotate-1 hover:rotate-0 transition-transform">
+                  <div class="text-3xl font-black" x-text="claimedRescues.length">0</div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">🏆 Rescued</div>
+                </div>
+                <div class="brutal-card bg-yellow p-5 text-center rotate-1 hover:rotate-0 transition-transform">
+                  <div class="text-3xl font-black">$<span x-text="totalSaved.toFixed(0)">0</span></div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">💰 Saved</div>
+                </div>
+                <div class="brutal-card bg-cyan p-5 text-center -rotate-1 hover:rotate-0 transition-transform">
+                  <div class="text-3xl font-black" x-text="uniqueRetailers">0</div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">🤝 Partners</div>
+                </div>
+              </div>
+
+              <!-- Rescues list -->
+              <div class="brutal-card bg-white overflow-hidden">
+                <div class="bg-cream border-b-4 border-ink px-6 py-5 flex items-center justify-between">
+                  <h2 class="text-2xl font-black">🏆 Claimed Rescues</h2>
+                  <button @click="fetchClaimedRescues()"
+                    class="px-4 py-2 bg-white border-4 border-ink font-black text-sm shadow-brutal-sm
+                           hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                    ↻ Refresh
+                  </button>
+                </div>
+
+                <!-- Empty -->
+                <div x-show="claimedRescues.length===0&&!rescuesLoading" class="p-12 text-center">
+                  <div class="text-6xl mb-4">🔍</div>
+                  <p class="text-ink/60 font-semibold mb-4">No claimed rescues yet!</p>
+                  <button onclick="navigateTo(event,'/browse','#FFD700')" class="brutal-btn">
+                    Browse Marketplace →
+                  </button>
+                </div>
+
+                <!-- Loading -->
+                <div x-show="rescuesLoading" x-cloak class="p-8 text-center">
+                  <p class="font-black text-ink/60 animate-pulse">Loading rescues...</p>
+                </div>
+
+                <!-- List -->
+                <div x-show="claimedRescues.length>0&&!rescuesLoading" class="divide-y-4 divide-ink">
+                  <template x-for="rescue in claimedRescues" :key="rescue.id">
+                    <div class="p-6 hover:bg-cream transition-colors">
+                      <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <div class="flex-1">
+                          <div class="flex items-center gap-2 mb-2">
+                            <span class="brutal-badge text-xs font-black"
+                              :style="'background:'+getCategoryColor(rescue.category)"
+                              x-text="getCategoryEmoji(rescue.category)+' '+rescue.category">
+                            </span>
+                          </div>
+                          <h3 class="text-lg font-black" x-text="rescue.title"></h3>
+                          <p class="text-sm text-ink/60 mt-1" x-text="rescue.description||'No description'"></p>
+                          <div class="text-xs text-ink/40 mt-2 font-semibold">
+                            From: <strong class="text-ink" x-text="rescue.profiles?.org_name||'Unknown'"></strong>
+                          </div>
+                          <div class="flex items-center gap-3 mt-3">
+                            <span class="font-black text-lg">$<span x-text="parseFloat(rescue.surplus_price).toFixed(2)"></span></span>
+                            <span class="text-sm text-lime font-black" style="color:#4d8a00">
+                              (saved $<span x-text="(rescue.original_price-rescue.surplus_price).toFixed(2)"></span>)
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Token -->
+                        <div class="bg-ink text-lime border-4 border-ink p-4 text-center min-w-[160px] shadow-brutal-sm -rotate-2 hover:rotate-0 transition-transform">
+                          <div class="text-xs font-black uppercase tracking-wider text-gray-400 mb-1">Token 🎟️</div>
+                          <div class="font-mono font-black tracking-wider text-sm"
+                            x-text="'ECO-'+rescue.id.substring(0,8).toUpperCase()"></div>
+                          <div class="text-xs text-gray-400 mt-2" x-text="formatDate(rescue.claimed_at)"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  function dashboardComponent() {
+    return {
+      loading: true, user: null, userType: '', orgName: '',
+      newListing: { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' },
+      submitting: false, formSuccess: '', formError: '',
+      myListings: [], inventoryLoading: false,
+      searchRadius: 5, alertCategories: ['grocery'], alertMethod: 'email', alertSaved: false,
+      alertOptions: [
+        { id:'grocery',    label:'Groceries',   emoji:'🥬' },
+        { id:'restaurant', label:'Restaurants', emoji:'🍽️' },
+        { id:'furniture',  label:'Furniture',   emoji:'🪑' },
+        { id:'hotel',      label:'Hotels',      emoji:'🏨' },
+      ],
+      claimedRescues: [], rescuesLoading: false, totalSaved: 0, uniqueRetailers: 0,
+
+      async init() {
+        try {
+          const { data: { user } } = await window.supa.auth.getUser();
+          if (!user) { this.loading=false; return; }
+          this.user = user;
+          const { data: profile } = await window.supa.from('profiles').select('*').eq('id', user.id).single();
+          if (!profile) { this.loading=false; return; }
+          this.userType = profile.user_type;
+          this.orgName  = profile.org_name;
+          if (this.userType==='retailer') await this.fetchMyListings();
+          else await this.fetchClaimedRescues();
+        } catch(e) { console.error(e); }
+        this.loading = false;
+      },
+
+      async submitListing() {
+        this.formSuccess=''; this.formError=''; this.submitting=true;
+        try {
+          const expiry = new Date();
+          expiry.setHours(expiry.getHours()+parseInt(this.newListing.expiryHours));
+          const { error } = await window.supa.from('listings').insert({
+            business_id: this.user.id,
+            title: this.newListing.title, category: this.newListing.category,
+            original_price: parseFloat(this.newListing.original_price),
+            surplus_price:  parseFloat(this.newListing.surplus_price),
+            expiry_time: expiry.toISOString(),
+            description: this.newListing.description, status:'available',
+          });
+          if (error) { this.formError='Failed: '+error.message; }
+          else {
+            this.formSuccess='Listing published! 🎉';
+            this.newListing = { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' };
+            await this.fetchMyListings();
+          }
+        } catch(e) { this.formError='Unexpected error.'; }
+        this.submitting=false;
+      },
+
+      async fetchMyListings() {
+        this.inventoryLoading=true;
+        try {
+          const { data, error } = await window.supa.from('listings')
+            .select('*, claimer:claimed_by(org_name)').eq('business_id', this.user.id)
+            .order('created_at', { ascending:false });
+          this.myListings = error ? [] : (data||[]).map(item=>({...item, claimer_name:item.claimer?.org_name||null}));
+        } catch(e) { this.myListings=[]; }
+        this.inventoryLoading=false;
+      },
+
+      async deleteListing(id) {
+        if (!confirm('Remove this listing?')) return;
+        const { error } = await window.supa.from('listings').delete().eq('id', id);
+        if (error) alert('Error: '+error.message);
+        else this.myListings = this.myListings.filter(l=>l.id!==id);
+      },
+
+      formatExpiry(t) {
+        const diff = new Date(t)-new Date();
+        if (diff<=0) return '⏰ Expired';
+        const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000);
+        return h>24 ? Math.floor(h/24)+'d '+(h%24)+'h' : h+'h '+m+'m';
+      },
+
+      async fetchClaimedRescues() {
+        this.rescuesLoading=true;
+        try {
+          const { data, error } = await window.supa.from('listings')
+            .select('*, profiles(org_name)').eq('claimed_by', this.user.id).eq('status','claimed')
+            .order('claimed_at', { ascending:false });
+          this.claimedRescues = error ? [] : (data||[]);
+          this.totalSaved = this.claimedRescues.reduce((s,r)=>s+(parseFloat(r.original_price)-parseFloat(r.surplus_price)),0);
+          this.uniqueRetailers = new Set(this.claimedRescues.map(r=>r.business_id)).size;
+        } catch(e) { this.claimedRescues=[]; }
+        this.rescuesLoading=false;
+      },
+
+      saveAlertPrefs() {
+        localStorage.setItem('eco_alert_prefs', JSON.stringify({ categories:this.alertCategories, method:this.alertMethod, radius:this.searchRadius }));
+        this.alertSaved=true;
+        setTimeout(()=>this.alertSaved=false, 3000);
+        if (this.alertMethod==='browser'&&'Notification' in window) Notification.requestPermission();
+      },
+
+      getCategoryColor(cat) {
+        return { grocery:'#ADFF2F', restaurant:'#FFD700', furniture:'#7DF9FF', hotel:'#FF6EC7' }[cat]||'#E5E5E5';
+      },
+      getCategoryEmoji(cat) {
+        return { grocery:'🥬', restaurant:'🍽️', furniture:'🪑', hotel:'🏨' }[cat]||'📦';
+      },
+      formatDate(d) {
+        if (!d) return 'N/A';
+        return new Date(d).toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      },
+    };
+  }
+</script>
