@@ -1,12 +1,10 @@
-/* ============================================================
-   ECO SHELF — Global Styles (Neo-Brutalism + Cartoon)
-   ============================================================ */
+/* EcoShelf Global Styles */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base ── */
+/* Base */
 @layer base {
   html { scroll-behavior: smooth; }
 
@@ -22,7 +20,7 @@
   ::selection { background: #ADFF2F; color: #0D0D0D; }
 }
 
-/* ── Components ── */
+/* Components */
 @layer components {
 
   /* Page section wrapper */
@@ -30,7 +28,7 @@
     @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* ─── Neo-Brutalist Cards ─── */
+  /* Neo-Brutalist Cards */
   .brutal-card {
     @apply bg-white transition-all duration-150;
     border: 4px solid #0D0D0D;
@@ -41,7 +39,7 @@
     box-shadow: 0px 0px 0px #0D0D0D;
   }
 
-  /* ─── Buttons ─── */
+  /* Buttons */
   .brutal-btn {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold cursor-pointer select-none transition-all duration-100 hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none;
     color: #0D0D0D;
@@ -60,7 +58,7 @@
   .brutal-btn-black  { @apply brutal-btn; background-color: #0D0D0D; color: #ADFF2F; }
   .brutal-btn-white  { @apply brutal-btn bg-white; }
 
-  /* ─── Inputs ─── */
+  /* Inputs */
   .brutal-input {
     @apply w-full px-4 py-3 bg-white font-grotesk font-semibold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:ring-0 transition-shadow duration-150;
     color: #0D0D0D;
@@ -78,13 +76,13 @@
     background-size: 20px;
   }
 
-  /* ─── Badges ─── */
+  /* Badges */
   .brutal-badge {
     @apply inline-block px-3 py-1 text-xs font-black uppercase tracking-wider;
     border: 2px solid #0D0D0D;
   }
 
-  /* ─── Comic caption box ─── */
+  /* Comic caption box */
   .comic-caption {
     @apply inline-block px-4 py-2 font-black text-sm uppercase tracking-wide -rotate-1;
     background-color: #FFD700;
@@ -92,7 +90,7 @@
     box-shadow: 4px 4px 0px #0D0D0D;
   }
 
-  /* ─── Speech bubble ─── */
+  /* Speech bubble */
   .speech-bubble {
     @apply relative bg-white p-4 font-bold;
     border: 4px solid #0D0D0D;
@@ -114,7 +112,7 @@
     z-index: 1;
   }
 
-  /* ─── Zigzag divider ─── */
+  /* Zigzag divider */
   .zigzag {
     background: linear-gradient(135deg, #0D0D0D 25%, transparent 25%) -10px 0,
                 linear-gradient(225deg, #0D0D0D 25%, transparent 25%) -10px 0,
@@ -127,7 +125,7 @@
   }
 }
 
-/* ── Page Transition Overlay ── */
+/* Page Transition Overlay */
 #page-transition-overlay {
   position: fixed;
   border-radius: 50%;
@@ -138,7 +136,7 @@
               height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Scroll reveal ── */
+/* Scroll reveal */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -149,13 +147,13 @@
   transform: translateY(0);
 }
 
-/* ── Cartoon text shadow ── */
+/* Cartoon text shadow */
 .text-stroke {
   -webkit-text-stroke: 2px #0D0D0D;
   paint-order: stroke fill;
 }
 
-/* ── Marquee ticker ── */
+/* Marquee ticker */
 .ticker-wrap {
   overflow: hidden;
   border-top: 4px solid #0D0D0D;

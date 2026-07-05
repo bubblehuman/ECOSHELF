@@ -6,10 +6,10 @@ import Layout from '../layouts/Layout.astro';
   <section class="brutal-section py-12 sm:py-20">
     <div class="max-w-lg mx-auto">
 
-      <!-- Fun header -->
+      <!-- Header -->
       <div class="text-center mb-8">
-        <div class="inline-block bg-ink border-4 border-ink p-6 shadow-brutal-lg -rotate-2 mb-4 hover:rotate-0 transition-transform duration-300">
-          <span class="text-6xl">🌿</span>
+        <div class="inline-block bg-ink border-4 border-ink p-6 shadow-brutal-lg -rotate-2 mb-4 hover:rotate-0 transition-transform duration-300 font-black text-white">
+          <span class="text-6xl">E</span>
         </div>
         <div class="comic-caption inline-block mt-2">Join the surplus revolution!</div>
       </div>
@@ -21,30 +21,30 @@ import Layout from '../layouts/Layout.astro';
           <button @click="tab='login'"
             :class="tab==='login' ? 'bg-lime text-ink' : 'bg-white text-ink/50 hover:bg-cream'"
             class="flex-1 py-4 font-black text-lg uppercase tracking-wider transition-colors border-r-4 border-ink">
-            🔑 Login
+            Login
           </button>
           <button @click="tab='register'"
             :class="tab==='register' ? 'bg-yellow text-ink' : 'bg-white text-ink/50 hover:bg-cream'"
             class="flex-1 py-4 font-black text-lg uppercase tracking-wider transition-colors">
-            ✍️ Register
+            Register
           </button>
         </div>
 
         <!-- Error / Success alerts -->
         <div x-show="errorMsg" x-cloak class="mx-6 mt-5">
           <div class="bg-orange border-4 border-ink p-4 font-bold text-white text-sm shadow-brutal-sm -rotate-1">
-            ⚠️ <span x-text="errorMsg"></span>
+            <span x-text="errorMsg"></span>
           </div>
         </div>
         <div x-show="successMsg" x-cloak class="mx-6 mt-5">
           <div class="bg-lime border-4 border-ink p-4 font-bold text-ink text-sm shadow-brutal-sm rotate-1">
-            ✅ <span x-text="successMsg"></span>
+            <span x-text="successMsg"></span>
           </div>
         </div>
 
-        <!-- ── LOGIN ── -->
+        <!-- Login Tab -->
         <div x-show="tab==='login'" x-cloak class="p-6 sm:p-8">
-          <h2 class="text-3xl font-black mb-1">Welcome back! 👋</h2>
+          <h2 class="text-3xl font-black mb-1">Welcome back!</h2>
           <p class="text-ink/60 text-sm mb-8">Sign in and continue saving the world.</p>
 
           <form @submit.prevent="handleLogin()" class="space-y-5">
@@ -60,8 +60,8 @@ import Layout from '../layouts/Layout.astro';
               onclick="if(!this.disabled) navigateTo(event, '', '#ADFF2F')"
               @click.prevent="handleLogin()"
               class="brutal-btn w-full text-lg font-black" :class="loading?'opacity-60 cursor-wait':''">
-              <span x-show="!loading">Sign In →</span>
-              <span x-show="loading" x-cloak>Signing in... ⏳</span>
+              <span x-show="!loading">Sign In</span>
+              <span x-show="loading" x-cloak>Signing in...</span>
             </button>
           </form>
 
@@ -73,9 +73,9 @@ import Layout from '../layouts/Layout.astro';
           </p>
         </div>
 
-        <!-- ── REGISTER ── -->
+        <!-- Register Tab -->
         <div x-show="tab==='register'" class="p-6 sm:p-8">
-          <h2 class="text-3xl font-black mb-1">Join EcoShelf! 🚀</h2>
+          <h2 class="text-3xl font-black mb-1">Join EcoShelf!</h2>
           <p class="text-ink/60 text-sm mb-8">Create your account and start making impact.</p>
 
           <form @submit.prevent="handleRegister()" class="space-y-5">
@@ -88,7 +88,7 @@ import Layout from '../layouts/Layout.astro';
                     ? 'bg-lime border-ink shadow-none translate-x-[3px] translate-y-[3px]'
                     : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
                   class="p-5 border-4 text-center transition-all duration-150 cursor-pointer hover:animate-wobble">
-                  <div class="text-4xl mb-2">🏪</div>
+                  <div class="text-4xl mb-2 font-black">R</div>
                   <div class="font-black text-sm">Retailer</div>
                   <div class="text-xs text-ink/60 mt-1">I have surplus</div>
                 </button>
@@ -97,7 +97,7 @@ import Layout from '../layouts/Layout.astro';
                     ? 'bg-yellow border-ink shadow-none translate-x-[3px] translate-y-[3px]'
                     : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
                   class="p-5 border-4 text-center transition-all duration-150 cursor-pointer hover:animate-wobble">
-                  <div class="text-4xl mb-2">🤝</div>
+                  <div class="text-4xl mb-2 font-black">N</div>
                   <div class="font-black text-sm">NGO</div>
                   <div class="text-xs text-ink/60 mt-1">We rescue items</div>
                 </button>
@@ -135,9 +135,9 @@ import Layout from '../layouts/Layout.astro';
               ]">
               <span x-show="!loading">
                 Create Account as
-                <span x-text="regUserType==='retailer'?'Retailer':regUserType==='ngo'?'NGO':'...'"></span> →
+                <span x-text="regUserType==='retailer'?'Retailer':regUserType==='ngo'?'NGO':'...'"></span>
               </span>
-              <span x-show="loading" x-cloak>Creating... ⏳</span>
+              <span x-show="loading" x-cloak>Creating...</span>
             </button>
           </form>
 
@@ -166,7 +166,7 @@ import Layout from '../layouts/Layout.astro';
           const { data, error } = await window.supa.auth.signInWithPassword({ email: this.loginEmail, password: this.loginPassword });
           if (error) { this.errorMsg=error.message; this.loading=false; return; }
           if (data.session) {
-            this.successMsg='Login successful! Redirecting... 🚀';
+            this.successMsg='Login successful! Redirecting...';
             setTimeout(() => { sessionStorage.setItem('eco_transition_color','#ADFF2F'); window.location.href='/dashboard'; }, 800);
           }
         } catch(e) { this.errorMsg='Unexpected error. Try again.'; this.loading=false; }
@@ -174,7 +174,7 @@ import Layout from '../layouts/Layout.astro';
 
       async handleRegister() {
         this.errorMsg=''; this.successMsg='';
-        if (!this.regUserType) { this.errorMsg='Please select Retailer or NGO! 👆'; return; }
+        if (!this.regUserType) { this.errorMsg='Please select Retailer or NGO!'; return; }
         this.loading=true;
         try {
           const { data, error } = await window.supa.auth.signUp({ email: this.regEmail, password: this.regPassword });
@@ -182,10 +182,10 @@ import Layout from '../layouts/Layout.astro';
           if (data.user) {
             const { error: pe } = await window.supa.from('profiles').insert({ id: data.user.id, org_name: this.regOrgName, user_type: this.regUserType, phone: this.regPhone, address: this.regAddress });
             if (pe) { this.errorMsg='Profile error: '+pe.message; this.loading=false; return; }
-            this.successMsg='Account created! Blasting off... 🚀';
+            this.successMsg='Account created! Redirecting...';
             setTimeout(() => { sessionStorage.setItem('eco_transition_color','#FFD700'); window.location.href='/dashboard'; }, 1000);
           } else {
-            this.successMsg='Check your email to confirm! 📧';
+            this.successMsg='Check your email to confirm!';
             this.loading=false;
           }
         } catch(e) { this.errorMsg='Unexpected error.'; this.loading=false; }

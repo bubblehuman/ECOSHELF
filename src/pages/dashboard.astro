@@ -9,7 +9,7 @@ import Layout from '../layouts/Layout.astro';
       <!-- Loading -->
       <div x-show="loading" x-cloak class="text-center py-20">
         <div class="inline-block brutal-card bg-lime p-8 -rotate-3 animate-bounceIn">
-          <div class="text-6xl mb-4">🌿</div>
+          <div class="text-6xl mb-4 font-black">...</div>
           <p class="font-black text-xl">Loading dashboard...</p>
         </div>
       </div>
@@ -17,7 +17,6 @@ import Layout from '../layouts/Layout.astro';
       <!-- Not authenticated -->
       <div x-show="!loading&&!user" x-cloak class="text-center py-20">
         <div class="inline-block brutal-card bg-cream p-12 -rotate-2 hover:rotate-0 transition-transform">
-          <div class="text-8xl mb-6">🔒</div>
           <h2 class="text-3xl font-black mb-4">Hold up!</h2>
           <p class="text-ink/60 mb-6 font-semibold">You need to sign in to access your dashboard.</p>
           <button onclick="navigateTo(event,'/auth','#FF6EC7')" class="brutal-btn text-lg font-black">
@@ -33,23 +32,23 @@ import Layout from '../layouts/Layout.astro';
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
           <div>
             <div class="comic-caption inline-block mb-3"
-              x-text="userType==='retailer'?'🏪 Retailer HQ':'🤝 NGO Command Center'">
+              x-text="userType==='retailer'?'Retailer HQ':'NGO Command Center'">
             </div>
             <h1 class="text-4xl sm:text-5xl font-black">
               <span x-text="userType==='retailer'?'Retailer':'NGO'"></span>
               <span class="bg-lime px-2 py-1 inline-block -rotate-1">Dashboard</span>
             </h1>
             <p class="text-ink/60 font-semibold mt-2">
-              Welcome back, <strong class="text-ink" x-text="orgName"></strong> 👋
+              Welcome back, <strong class="text-ink" x-text="orgName"></strong>
             </p>
           </div>
           <div class="brutal-badge font-black text-base px-4 py-2"
             :class="userType==='retailer'?'bg-lime':'bg-yellow'"
-            x-text="userType==='retailer'?'🏪 Retailer Account':'🤝 NGO Account'">
+            x-text="userType==='retailer'?'Retailer Account':'NGO Account'">
           </div>
         </div>
 
-        <!-- ══════════ RETAILER VIEW ══════════ -->
+        <!-- Retailer View -->
         <div x-show="userType==='retailer'">
           <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
@@ -58,19 +57,19 @@ import Layout from '../layouts/Layout.astro';
               <div class="brutal-card bg-white sticky top-24 overflow-hidden">
                 <!-- Form header -->
                 <div class="bg-lime border-b-4 border-ink px-6 py-5">
-                  <h2 class="text-2xl font-black">⚡ List Surplus Now</h2>
+                  <h2 class="text-2xl font-black">List Surplus Now</h2>
                   <p class="text-ink/70 text-sm font-semibold">Fill in the details below</p>
                 </div>
 
                 <!-- Alerts -->
                 <div x-show="formSuccess" x-cloak class="mx-6 mt-5">
                   <div class="bg-lime border-4 border-ink p-3 font-black text-sm shadow-brutal-sm rotate-1">
-                    ✅ <span x-text="formSuccess"></span>
+                    <span x-text="formSuccess"></span>
                   </div>
                 </div>
                 <div x-show="formError" x-cloak class="mx-6 mt-5">
                   <div class="bg-orange border-4 border-ink p-3 font-black text-sm text-white shadow-brutal-sm -rotate-1">
-                    ⚠️ <span x-text="formError"></span>
+                    <span x-text="formError"></span>
                   </div>
                 </div>
 
@@ -85,10 +84,10 @@ import Layout from '../layouts/Layout.astro';
                     <label class="block font-black text-sm uppercase tracking-wider mb-2">Category</label>
                     <select x-model="newListing.category" required class="brutal-select">
                       <option value="" disabled>Pick a category...</option>
-                      <option value="grocery">🥬 Grocery</option>
-                      <option value="restaurant">🍽️ Restaurant</option>
-                      <option value="furniture">🪑 Furniture</option>
-                      <option value="hotel">🏨 Hotel</option>
+                      <option value="grocery">Grocery</option>
+                      <option value="restaurant">Restaurant</option>
+                      <option value="furniture">Furniture</option>
+                      <option value="hotel">Hotel</option>
                     </select>
                   </div>
 
@@ -109,7 +108,7 @@ import Layout from '../layouts/Layout.astro';
                   <div x-show="newListing.original_price>0&&newListing.surplus_price>0"
                     class="bg-lime border-4 border-ink p-3 text-center -rotate-1">
                     <span class="font-black text-lg">
-                      🎯 <span x-text="Math.round((1-newListing.surplus_price/newListing.original_price)*100)+'% savings!'"></span>
+                      <span x-text="Math.round((1-newListing.surplus_price/newListing.original_price)*100)+'% savings!'"></span>
                     </span>
                   </div>
 
@@ -117,7 +116,7 @@ import Layout from '../layouts/Layout.astro';
                     <label class="block font-black text-sm uppercase tracking-wider mb-2">Expires In</label>
                     <select x-model="newListing.expiryHours" required class="brutal-select">
                       <option value="" disabled>Select window...</option>
-                      <option value="1">1 hour ⚡</option>
+                      <option value="1">1 hour</option>
                       <option value="2">2 hours</option>
                       <option value="4">4 hours</option>
                       <option value="6">6 hours</option>
@@ -140,8 +139,8 @@ import Layout from '../layouts/Layout.astro';
                     :disabled="submitting"
                     class="brutal-btn w-full text-lg font-black"
                     :class="submitting?'opacity-60 cursor-wait':''">
-                    <span x-show="!submitting">🚀 Publish Listing!</span>
-                    <span x-show="submitting" x-cloak>Publishing... ⏳</span>
+                    <span x-show="!submitting">Publish Listing!</span>
+                    <span x-show="submitting" x-cloak>Publishing...</span>
                   </button>
                 </form>
               </div>
@@ -151,7 +150,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="lg:col-span-3">
               <div class="brutal-card bg-white overflow-hidden">
                 <div class="bg-cream border-b-4 border-ink px-6 py-5 flex items-center justify-between">
-                  <h2 class="text-2xl font-black">📦 Active Inventory</h2>
+                  <h2 class="text-2xl font-black">Active Inventory</h2>
                   <button @click="fetchMyListings()"
                     onclick="this.style.transform='rotate(360deg)'; this.style.transition='transform 0.4s ease'; setTimeout(()=>{this.style.transform='';this.style.transition=''},500)"
                     class="px-4 py-2 bg-white border-4 border-ink font-black text-sm shadow-brutal-sm
@@ -162,8 +161,7 @@ import Layout from '../layouts/Layout.astro';
 
                 <!-- Empty -->
                 <div x-show="myListings.length===0&&!inventoryLoading" class="p-12 text-center">
-                  <div class="text-6xl mb-4">📋</div>
-                  <p class="text-ink/60 font-semibold">No listings yet. Create your first one! 👆</p>
+                  <p class="text-ink/60 font-semibold">No listings yet. Create your first one!</p>
                 </div>
 
                 <!-- Loading -->
@@ -200,7 +198,7 @@ import Layout from '../layouts/Layout.astro';
                           <td class="px-4 py-3">
                             <span class="brutal-badge font-black text-xs"
                               :class="item.status==='available'?'bg-lime':'bg-yellow'"
-                              x-text="item.status==='available'?'✅ Available':'🏆 Claimed'">
+                              x-text="item.status==='available'?'Available':'Claimed'">
                             </span>
                           </td>
                           <td class="px-4 py-3">
@@ -210,7 +208,7 @@ import Layout from '../layouts/Layout.astro';
                                      hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">
                               Remove
                             </button>
-                            <span x-show="item.status==='claimed'" class="text-xs text-ink/50 font-bold">🎊 Done!</span>
+                            <span x-show="item.status==='claimed'" class="text-xs text-ink/50 font-bold">Done!</span>
                           </td>
                         </tr>
                       </template>
@@ -222,7 +220,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
 
-        <!-- ══════════ NGO VIEW ══════════ -->
+        <!-- NGO View -->
         <div x-show="userType==='ngo'">
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -232,7 +230,7 @@ import Layout from '../layouts/Layout.astro';
               <!-- Distance -->
               <div class="brutal-card bg-white overflow-hidden">
                 <div class="bg-yellow border-b-4 border-ink px-6 py-4">
-                  <h2 class="text-xl font-black">📍 Location & Range</h2>
+                  <h2 class="text-xl font-black">Location & Range</h2>
                 </div>
                 <div class="p-6 space-y-5">
                   <!-- Map placeholder -->
@@ -246,7 +244,6 @@ import Layout from '../layouts/Layout.astro';
                     <div class="absolute top-1/2 right-1/4 w-2 h-2 rounded-full bg-pink border-2 border-ink animate-bounceIn" style="animation-delay:0.6s"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                       <div class="text-center brutal-card bg-white px-3 py-2 -rotate-2">
-                        <div class="text-2xl">🗺️</div>
                         <p class="text-xs font-black">Map View</p>
                       </div>
                     </div>
@@ -270,7 +267,7 @@ import Layout from '../layouts/Layout.astro';
               <!-- Alert Config -->
               <div class="brutal-card bg-white overflow-hidden">
                 <div class="bg-orange border-b-4 border-ink px-6 py-4">
-                  <h2 class="text-xl font-black text-white">🔔 Alert Preferences</h2>
+                  <h2 class="text-xl font-black text-white">Alert Preferences</h2>
                 </div>
                 <div class="p-6 space-y-4">
                   <p class="text-sm text-ink/60 font-semibold">Get notified when matching items pop up!</p>
@@ -280,7 +277,7 @@ import Layout from '../layouts/Layout.astro';
                     <template x-for="cat in alertOptions" :key="cat.id">
                       <label class="flex items-center gap-3 p-3 border-4 border-ink cursor-pointer hover:bg-cream transition-colors hover:animate-wobble">
                         <input type="checkbox" x-model="alertCategories" :value="cat.id" class="w-5 h-5 accent-lime" />
-                        <span class="font-black text-sm" x-text="cat.emoji+' '+cat.label"></span>
+                        <span class="font-black text-sm" x-text="cat.label"></span>
                       </label>
                     </template>
                   </div>
@@ -292,21 +289,21 @@ import Layout from '../layouts/Layout.astro';
                         ? 'bg-yellow border-ink shadow-none translate-x-[2px] translate-y-[2px]'
                         : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
                       class="p-3 border-4 text-center font-black text-sm transition-all">
-                      📧 Email
+                      Email
                     </button>
                     <button type="button" @click="alertMethod='browser'"
                       :class="alertMethod==='browser'
                         ? 'bg-cyan border-ink shadow-none translate-x-[2px] translate-y-[2px]'
                         : 'bg-white border-ink/30 hover:border-ink shadow-brutal-sm'"
                       class="p-3 border-4 text-center font-black text-sm transition-all">
-                      🔔 Browser
+                      Browser
                     </button>
                   </div>
 
                   <button @click="saveAlertPrefs()"
                     onclick="this.classList.add('animate-wobble'); setTimeout(()=>this.classList.remove('animate-wobble'),600)"
                     class="brutal-btn-yellow w-full font-black">
-                    💾 Save Prefs
+                    Save Prefs
                   </button>
 
                   <div x-show="alertSaved" x-cloak
@@ -314,7 +311,7 @@ import Layout from '../layouts/Layout.astro';
                     x-transition:enter-start="opacity-0 scale-75 rotate-6"
                     x-transition:enter-end="opacity-100 scale-100 rotate-0"
                     class="text-center font-black text-sm bg-lime border-4 border-ink p-3 -rotate-1">
-                    ✅ Preferences saved! 🎊
+                    Preferences saved!
                   </div>
                 </div>
               </div>
@@ -326,22 +323,22 @@ import Layout from '../layouts/Layout.astro';
               <div class="grid grid-cols-3 gap-4 mb-6">
                 <div class="brutal-card bg-lime p-5 text-center -rotate-1 hover:rotate-0 transition-transform">
                   <div class="text-3xl font-black" x-text="claimedRescues.length">0</div>
-                  <div class="text-xs font-black uppercase tracking-wider mt-1">🏆 Rescued</div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">Rescued</div>
                 </div>
                 <div class="brutal-card bg-yellow p-5 text-center rotate-1 hover:rotate-0 transition-transform">
                   <div class="text-3xl font-black">$<span x-text="totalSaved.toFixed(0)">0</span></div>
-                  <div class="text-xs font-black uppercase tracking-wider mt-1">💰 Saved</div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">Saved</div>
                 </div>
                 <div class="brutal-card bg-cyan p-5 text-center -rotate-1 hover:rotate-0 transition-transform">
                   <div class="text-3xl font-black" x-text="uniqueRetailers">0</div>
-                  <div class="text-xs font-black uppercase tracking-wider mt-1">🤝 Partners</div>
+                  <div class="text-xs font-black uppercase tracking-wider mt-1">Partners</div>
                 </div>
               </div>
 
               <!-- Rescues list -->
               <div class="brutal-card bg-white overflow-hidden">
                 <div class="bg-cream border-b-4 border-ink px-6 py-5 flex items-center justify-between">
-                  <h2 class="text-2xl font-black">🏆 Claimed Rescues</h2>
+                  <h2 class="text-2xl font-black">Claimed Rescues</h2>
                   <button @click="fetchClaimedRescues()"
                     class="px-4 py-2 bg-white border-4 border-ink font-black text-sm shadow-brutal-sm
                            hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
@@ -349,9 +346,7 @@ import Layout from '../layouts/Layout.astro';
                   </button>
                 </div>
 
-                <!-- Empty -->
                 <div x-show="claimedRescues.length===0&&!rescuesLoading" class="p-12 text-center">
-                  <div class="text-6xl mb-4">🔍</div>
                   <p class="text-ink/60 font-semibold mb-4">No claimed rescues yet!</p>
                   <button onclick="navigateTo(event,'/browse','#FFD700')" class="brutal-btn">
                     Browse Marketplace →
@@ -372,7 +367,7 @@ import Layout from '../layouts/Layout.astro';
                           <div class="flex items-center gap-2 mb-2">
                             <span class="brutal-badge text-xs font-black"
                               :style="'background:'+getCategoryColor(rescue.category)"
-                              x-text="getCategoryEmoji(rescue.category)+' '+rescue.category">
+                              x-text="rescue.category">
                             </span>
                           </div>
                           <h3 class="text-lg font-black" x-text="rescue.title"></h3>
@@ -390,7 +385,7 @@ import Layout from '../layouts/Layout.astro';
 
                         <!-- Token -->
                         <div class="bg-ink text-lime border-4 border-ink p-4 text-center min-w-[160px] shadow-brutal-sm -rotate-2 hover:rotate-0 transition-transform">
-                          <div class="text-xs font-black uppercase tracking-wider text-gray-400 mb-1">Token 🎟️</div>
+                          <div class="text-xs font-black uppercase tracking-wider text-gray-400 mb-1">Token</div>
                           <div class="font-mono font-black tracking-wider text-sm"
                             x-text="'ECO-'+rescue.id.substring(0,8).toUpperCase()"></div>
                           <div class="text-xs text-gray-400 mt-2" x-text="formatDate(rescue.claimed_at)"></div>
@@ -418,10 +413,10 @@ import Layout from '../layouts/Layout.astro';
       myListings: [], inventoryLoading: false,
       searchRadius: 5, alertCategories: ['grocery'], alertMethod: 'email', alertSaved: false,
       alertOptions: [
-        { id:'grocery',    label:'Groceries',   emoji:'🥬' },
-        { id:'restaurant', label:'Restaurants', emoji:'🍽️' },
-        { id:'furniture',  label:'Furniture',   emoji:'🪑' },
-        { id:'hotel',      label:'Hotels',      emoji:'🏨' },
+        { id:'grocery',    label:'Groceries'   },
+        { id:'restaurant', label:'Restaurants' },
+        { id:'furniture',  label:'Furniture'   },
+        { id:'hotel',      label:'Hotels'      },
       ],
       claimedRescues: [], rescuesLoading: false, totalSaved: 0, uniqueRetailers: 0,
 
@@ -455,7 +450,7 @@ import Layout from '../layouts/Layout.astro';
           });
           if (error) { this.formError='Failed: '+error.message; }
           else {
-            this.formSuccess='Listing published! 🎉';
+            this.formSuccess='Listing published!';
             this.newListing = { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' };
             await this.fetchMyListings();
           }
@@ -483,7 +478,7 @@ import Layout from '../layouts/Layout.astro';
 
       formatExpiry(t) {
         const diff = new Date(t)-new Date();
-        if (diff<=0) return '⏰ Expired';
+        if (diff<=0) return 'Expired';
         const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000);
         return h>24 ? Math.floor(h/24)+'d '+(h%24)+'h' : h+'h '+m+'m';
       },
@@ -510,9 +505,6 @@ import Layout from '../layouts/Layout.astro';
 
       getCategoryColor(cat) {
         return { grocery:'#ADFF2F', restaurant:'#FFD700', furniture:'#7DF9FF', hotel:'#FF6EC7' }[cat]||'#E5E5E5';
-      },
-      getCategoryEmoji(cat) {
-        return { grocery:'🥬', restaurant:'🍽️', furniture:'🪑', hotel:'🏨' }[cat]||'📦';
       },
       formatDate(d) {
         if (!d) return 'N/A';
