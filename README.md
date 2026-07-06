@@ -1,5 +1,5 @@
 <!-- Need Provider Project Update v2.1 -->
-# 🌿 Eco Shelf
+# 🌿 Need Provider
 
 **Smart, localized marketplace bridging retail surplus and community need.**
 
