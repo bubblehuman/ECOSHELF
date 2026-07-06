@@ -191,31 +191,24 @@ import Layout from '../layouts/Layout.astro';
       async fetchListings() {
         this.loading = true;
         try {
-          let q = window.supa.from('listings').select('*, profiles(org_name)')
-            .eq('status','available').gte('expiry_time', new Date().toISOString())
-            .order('created_at', { ascending: false });
-          if (this.activeCategory !== 'all') q = q.eq('category', this.activeCategory);
-          const { data, error } = await q;
-          this.listings = error ? [] : (data||[]);
+          let url = '/listings?status=available';
+          if (this.activeCategory !== 'all') url += '&category=' + this.activeCategory;
+          const json = await window.apiFetch(url);
+          this.listings = json.data || [];
         } catch(e) { this.listings=[]; }
         this.loading = false;
       },
 
       async claimListing(listing, event) {
-        const { data: { user } } = await window.supa.auth.getUser();
+        const user = await window.getUser();
         if (!user) { navigateTo(event, '/auth', '#FF6EC7'); return; }
         this.claimingId = listing.id;
         try {
-          const { error } = await window.supa.from('listings').update({
-            status:'claimed', claimed_by: user.id, claimed_at: new Date().toISOString(),
-          }).eq('id', listing.id);
-          if (error) { alert('Failed: '+error.message); }
-          else {
-            this.claimToken = 'ECO-'+listing.id.substring(0,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
-            this.claimModal = true;
-            listing.status = 'claimed';
-          }
-        } catch(e) { alert('An error occurred.'); }
+          await window.apiFetch('/listings/' + listing.id + '/claim', { method: 'PATCH' });
+          this.claimToken = 'ECO-'+listing.id.substring(0,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
+          this.claimModal = true;
+          listing.status = 'claimed';
+        } catch(e) { alert('Failed: '+(e.message||'An error occurred.')); }
         this.claimingId = null;
       },
 

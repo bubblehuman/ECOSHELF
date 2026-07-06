@@ -422,10 +422,11 @@ import Layout from '../layouts/Layout.astro';
 
       async init() {
         try {
-          const { data: { user } } = await window.supa.auth.getUser();
+          const user = await window.getUser();
           if (!user) { this.loading=false; return; }
           this.user = user;
-          const { data: profile } = await window.supa.from('profiles').select('*').eq('id', user.id).single();
+          const profileJson = await window.apiFetch('/profiles/' + user.id);
+          const profile = profileJson.profile;
           if (!profile) { this.loading=false; return; }
           this.userType = profile.user_type;
           this.orgName  = profile.org_name;
@@ -440,40 +441,39 @@ import Layout from '../layouts/Layout.astro';
         try {
           const expiry = new Date();
           expiry.setHours(expiry.getHours()+parseInt(this.newListing.expiryHours));
-          const { error } = await window.supa.from('listings').insert({
-            business_id: this.user.id,
-            title: this.newListing.title, category: this.newListing.category,
-            original_price: parseFloat(this.newListing.original_price),
-            surplus_price:  parseFloat(this.newListing.surplus_price),
-            expiry_time: expiry.toISOString(),
-            description: this.newListing.description, status:'available',
+          await window.apiFetch('/listings', {
+            method: 'POST',
+            body: JSON.stringify({
+              title: this.newListing.title,
+              category: this.newListing.category,
+              original_price: parseFloat(this.newListing.original_price),
+              surplus_price:  parseFloat(this.newListing.surplus_price),
+              expiry_time: expiry.toISOString(),
+              description: this.newListing.description,
+            }),
           });
-          if (error) { this.formError='Failed: '+error.message; }
-          else {
-            this.formSuccess='Listing published!';
-            this.newListing = { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' };
-            await this.fetchMyListings();
-          }
-        } catch(e) { this.formError='Unexpected error.'; }
+          this.formSuccess='Listing published!';
+          this.newListing = { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' };
+          await this.fetchMyListings();
+        } catch(e) { this.formError='Failed: '+(e.message||'Unexpected error.'); }
         this.submitting=false;
       },
 
       async fetchMyListings() {
         this.inventoryLoading=true;
         try {
-          const { data, error } = await window.supa.from('listings')
-            .select('*, claimer:claimed_by(org_name)').eq('business_id', this.user.id)
-            .order('created_at', { ascending:false });
-          this.myListings = error ? [] : (data||[]).map(item=>({...item, claimer_name:item.claimer?.org_name||null}));
+          const json = await window.apiFetch('/listings/mine');
+          this.myListings = (json.data||[]).map(item=>({...item, claimer_name:item.claimer?.org_name||null}));
         } catch(e) { this.myListings=[]; }
         this.inventoryLoading=false;
       },
 
       async deleteListing(id) {
         if (!confirm('Remove this listing?')) return;
-        const { error } = await window.supa.from('listings').delete().eq('id', id);
-        if (error) alert('Error: '+error.message);
-        else this.myListings = this.myListings.filter(l=>l.id!==id);
+        try {
+          await window.apiFetch('/listings/' + id, { method: 'DELETE' });
+          this.myListings = this.myListings.filter(l=>l.id!==id);
+        } catch(e) { alert('Error: '+(e.message||'Unknown error')); }
       },
 
       formatExpiry(t) {
@@ -486,10 +486,8 @@ import Layout from '../layouts/Layout.astro';
       async fetchClaimedRescues() {
         this.rescuesLoading=true;
         try {
-          const { data, error } = await window.supa.from('listings')
-            .select('*, profiles(org_name)').eq('claimed_by', this.user.id).eq('status','claimed')
-            .order('claimed_at', { ascending:false });
-          this.claimedRescues = error ? [] : (data||[]);
+          const json = await window.apiFetch('/listings/claimed');
+          this.claimedRescues = json.data || [];
           this.totalSaved = this.claimedRescues.reduce((s,r)=>s+(parseFloat(r.original_price)-parseFloat(r.surplus_price)),0);
           this.uniqueRetailers = new Set(this.claimedRescues.map(r=>r.business_id)).size;
         } catch(e) { this.claimedRescues=[]; }

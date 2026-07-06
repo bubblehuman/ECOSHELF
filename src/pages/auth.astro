@@ -163,13 +163,14 @@ import Layout from '../layouts/Layout.astro';
       async handleLogin() {
         this.errorMsg=''; this.successMsg=''; this.loading=true;
         try {
-          const { data, error } = await window.supa.auth.signInWithPassword({ email: this.loginEmail, password: this.loginPassword });
-          if (error) { this.errorMsg=error.message; this.loading=false; return; }
-          if (data.session) {
-            this.successMsg='Login successful! Redirecting...';
-            setTimeout(() => { sessionStorage.setItem('eco_transition_color','#ADFF2F'); window.location.href='/dashboard'; }, 800);
-          }
-        } catch(e) { this.errorMsg='Unexpected error. Try again.'; this.loading=false; }
+          const json = await window.apiFetch('/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ email: this.loginEmail, password: this.loginPassword }),
+          });
+          window.setToken(json.token);
+          this.successMsg='Login successful! Redirecting...';
+          setTimeout(() => { sessionStorage.setItem('eco_transition_color','#ADFF2F'); window.location.href='/dashboard'; }, 800);
+        } catch(e) { this.errorMsg=e.message||'Unexpected error. Try again.'; this.loading=false; }
       },
 
       async handleRegister() {
@@ -177,18 +178,27 @@ import Layout from '../layouts/Layout.astro';
         if (!this.regUserType) { this.errorMsg='Please select Retailer or NGO!'; return; }
         this.loading=true;
         try {
-          const { data, error } = await window.supa.auth.signUp({ email: this.regEmail, password: this.regPassword });
-          if (error) { this.errorMsg=error.message; this.loading=false; return; }
-          if (data.user) {
-            const { error: pe } = await window.supa.from('profiles').insert({ id: data.user.id, org_name: this.regOrgName, user_type: this.regUserType, phone: this.regPhone, address: this.regAddress });
-            if (pe) { this.errorMsg='Profile error: '+pe.message; this.loading=false; return; }
-            this.successMsg='Account created! Redirecting...';
-            setTimeout(() => { sessionStorage.setItem('eco_transition_color','#FFD700'); window.location.href='/dashboard'; }, 1000);
-          } else {
-            this.successMsg='Check your email to confirm!';
-            this.loading=false;
-          }
-        } catch(e) { this.errorMsg='Unexpected error.'; this.loading=false; }
+          // 1. Create user account
+          const authJson = await window.apiFetch('/auth/signup', {
+            method: 'POST',
+            body: JSON.stringify({ email: this.regEmail, password: this.regPassword }),
+          });
+          window.setToken(authJson.token);
+
+          // 2. Create profile
+          await window.apiFetch('/profiles', {
+            method: 'POST',
+            body: JSON.stringify({
+              org_name: this.regOrgName,
+              user_type: this.regUserType,
+              phone: this.regPhone,
+              address: this.regAddress,
+            }),
+          });
+
+          this.successMsg='Account created! Redirecting...';
+          setTimeout(() => { sessionStorage.setItem('eco_transition_color','#FFD700'); window.location.href='/dashboard'; }, 1000);
+        } catch(e) { this.errorMsg=e.message||'Unexpected error.'; this.loading=false; }
       },
     };
   }

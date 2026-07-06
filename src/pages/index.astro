@@ -366,8 +366,8 @@ import Layout from '../layouts/Layout.astro';
       targetWaste: 12450, targetListings: 37, targetBusinesses: 86,
       async init() {
         try {
-          const { count } = await window.supa.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'available');
-          if (count !== null) this.targetListings = count;
+          const json = await window.apiFetch('/listings/count?status=available');
+          if (json.count !== null && json.count !== undefined) this.targetListings = json.count;
         } catch(e) {}
         this.animateCounter('wasteDiverted', this.targetWaste, 2000);
         this.animateCounter('activeListings', this.targetListings, 1500);

@@ -1,0 +1,24 @@
+
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: ecoshelf-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ecoshelf
+      POSTGRES_USER: ecoshelf_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ecoshelf_dev_pass}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./supabase/schema-local.sql:/docker-entrypoint-initdb.d/01-schema.sql:z
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ecoshelf_user -d ecoshelf"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

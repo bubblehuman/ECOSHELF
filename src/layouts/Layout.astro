@@ -20,12 +20,46 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title} | EcoShelf</title>
 
-    <!-- Supabase -->
-    <script is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- API Helpers (replaces Supabase SDK) -->
     <script is:inline>
-      window.SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-      window.SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-      window.supa = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      window.API_URL = 'http://localhost:3001/api';
+
+      window.getToken = function() {
+        return localStorage.getItem('eco_token');
+      };
+
+      window.setToken = function(token) {
+        localStorage.setItem('eco_token', token);
+        window.dispatchEvent(new Event('eco_auth_change'));
+      };
+
+      window.clearToken = function() {
+        localStorage.removeItem('eco_token');
+        window.dispatchEvent(new Event('eco_auth_change'));
+      };
+
+      window.getUser = async function() {
+        const token = window.getToken();
+        if (!token) return null;
+        try {
+          const res = await fetch(window.API_URL + '/auth/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+          });
+          if (!res.ok) { window.clearToken(); return null; }
+          const json = await res.json();
+          return json.user || null;
+        } catch (e) { return null; }
+      };
+
+      window.apiFetch = async function(path, options = {}) {
+        const token = window.getToken();
+        const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+        const res = await fetch(window.API_URL + path, { ...options, headers });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || 'Request failed');
+        return json;
+      };
     </script>
   </head>
 
@@ -228,16 +262,17 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
           mobileOpen: false, user: null, userEmail: '',
           async init() {
             try {
-              const { data } = await window.supa.auth.getUser();
-              if (data.user) { this.user = data.user; this.userEmail = data.user.email || ''; }
+              const user = await window.getUser();
+              if (user) { this.user = user; this.userEmail = user.email || ''; }
             } catch(e) {}
-            window.supa.auth.onAuthStateChange((_e, session) => {
-              this.user = session?.user || null;
-              this.userEmail = session?.user?.email || '';
+            window.addEventListener('eco_auth_change', async () => {
+              const user = await window.getUser();
+              this.user = user;
+              this.userEmail = user?.email || '';
             });
           },
           async logout() {
-            await window.supa.auth.signOut();
+            window.clearToken();
             navigateTo({ currentTarget: document.body }, '/', '#ADFF2F');
           },
         };
