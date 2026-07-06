@@ -5,8 +5,19 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Rescue Surplus. Reduce Waste.">
 
   <!-- Panel 1: Hero -->
-  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center">
+  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center bg-grid-dark">
 
+    <!-- Floating Doodles -->
+    <div class="absolute top-24 right-12 text-lime/20 w-16 h-16 pointer-events-none animate-float-slow select-none hidden sm:block">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+        <path d="M50 10 C50 35 35 50 10 50 C35 50 50 65 50 90 C50 65 65 50 90 50 C65 50 50 35 50 10 Z" />
+      </svg>
+    </div>
+    <div class="absolute bottom-28 left-8 text-orange/20 w-12 h-12 pointer-events-none animate-spin-slow select-none hidden md:block">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+        <path d="M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M25 75 L75 25" />
+      </svg>
+    </div>
 
     <div class="brutal-section py-20 relative z-10">
       <div class="max-w-4xl">
@@ -20,7 +31,14 @@ import Layout from '../layouts/Layout.astro';
           <span class="text-lime" style="-webkit-text-stroke:2px #ADFF2F; color:#ADFF2F">
             It Can Be
           </span><br />
-          <span class="text-orange">Someone's Next Meal.</span>
+          <span class="relative inline-block text-orange">
+            Someone's Next Meal.
+            <!-- Double hand-drawn underline doodle -->
+            <svg class="absolute -bottom-3 left-0 w-full h-5 text-lime pointer-events-none" viewBox="0 0 300 20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+              <path d="M5 12 C50 3, 150 18, 295 10" class="doodle-path" />
+              <path d="M20 17 C80 6, 200 16, 280 9" class="doodle-path" opacity="0.7" />
+            </svg>
+          </span>
         </h1>
 
         <p class="text-xl sm:text-2xl text-gray-300 max-w-2xl mb-10 leading-relaxed reveal" style="animation-delay:0.2s">
@@ -55,7 +73,14 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Panel 2: Problem Statement -->
-  <section class="relative min-h-screen bg-yellow border-b-8 border-ink overflow-hidden flex items-center">
+  <section class="relative min-h-screen bg-yellow border-b-8 border-ink overflow-hidden flex items-center bg-grid-light">
+    <!-- Background spiral doodle -->
+    <div class="absolute top-20 right-20 text-ink/5 w-24 h-24 pointer-events-none select-none hidden lg:block">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M50 50 C40 40, 30 60, 50 70 C70 80, 80 40, 50 30 C20 20, 10 70, 50 90 C90 110, 110 30, 50 10" class="doodle-path" />
+      </svg>
+    </div>
+
     <div class="absolute top-0 left-0 bg-ink text-lime px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
       Chapter 2
     </div>
@@ -70,6 +95,13 @@ import Layout from '../layouts/Layout.astro';
             <div class="speech-bubble absolute -top-4 -right-4 sm:-right-8 w-48 text-sm rotate-3 animate-bounceIn">
               "We have 200 loaves expiring TONIGHT!"
             </div>
+            <!-- Hand-drawn Arrow pointing to the E -->
+            <div class="absolute -bottom-10 -right-4 w-20 h-20 text-ink rotate-[15deg] pointer-events-none hidden sm:block">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 20 C40 10, 80 30, 70 80" class="doodle-path" />
+                <path d="M55 70 L70 80 L80 65" class="doodle-path" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -78,7 +110,13 @@ import Layout from '../layouts/Layout.astro';
           <div class="comic-caption mb-6">Meanwhile, at a grocery store near you...</div>
           <h2 class="text-5xl sm:text-6xl font-black text-ink leading-none mb-6">
             Retailers are
-            <span class="bg-orange text-white px-2 py-1 inline-block -rotate-1">DROWNING</span>
+            <span class="bg-orange text-white px-2 py-1 inline-block -rotate-1 relative mx-1">
+              DROWNING
+              <!-- Rough hand-drawn borders around DROWNING -->
+              <svg class="absolute -inset-2 w-[calc(100%+16px)] h-[calc(100%+16px)] text-ink pointer-events-none" viewBox="0 0 100 40" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M3 3 L97 3 L97 37 L3 37 Z" class="doodle-path" />
+              </svg>
+            </span>
             in surplus.
           </h2>
           <p class="text-xl text-ink/80 leading-relaxed mb-6">
@@ -106,7 +144,7 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Panel 3: Solution -->
-  <section class="relative min-h-screen bg-lime border-b-8 border-ink overflow-hidden flex items-center">
+  <section class="relative min-h-screen bg-lime border-b-8 border-ink overflow-hidden flex items-center bg-grid-light">
     <div class="absolute top-0 left-0 bg-ink text-lime px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
       Chapter 3
     </div>
@@ -118,8 +156,19 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- Huge hero logo stamp -->
-        <div class="reveal mb-6" style="animation-delay:0.1s">
-          <div class="inline-block bg-ink border-4 border-ink p-8 shadow-brutal-xl -rotate-2 hover:rotate-0 transition-transform duration-300">
+        <div class="reveal mb-6 relative inline-block animate-float-slow" style="animation-delay:0.1s">
+          <!-- Starburst radiating lines behind/around the N logo -->
+          <svg class="absolute -inset-16 w-[calc(100%+128px)] h-[calc(100%+128px)] text-ink pointer-events-none select-none" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+            <path d="M30 30 L60 60" class="doodle-path" />
+            <path d="M170 30 L140 60" class="doodle-path" />
+            <path d="M30 170 L60 140" class="doodle-path" />
+            <path d="M170 170 L140 140" class="doodle-path" />
+            <path d="M10 100 L50 100" class="doodle-path" />
+            <path d="M190 100 L150 100" class="doodle-path" />
+            <path d="M100 10 L100 50" class="doodle-path" />
+            <path d="M100 190 L100 150" class="doodle-path" />
+          </svg>
+          <div class="relative z-10 inline-block bg-ink border-4 border-ink p-8 shadow-brutal-xl -rotate-2 hover:rotate-0 transition-transform duration-300">
             <span class="text-8xl sm:text-[10rem] font-black text-white">N</span>
           </div>
         </div>
@@ -127,7 +176,13 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="text-6xl sm:text-8xl font-black text-ink leading-none mb-6 reveal" style="animation-delay:0.15s">
           Need Provider
           <br />
-          <span class="text-white" style="-webkit-text-stroke:3px #0D0D0D">has entered</span>
+          <span class="relative inline-block text-white" style="-webkit-text-stroke:3px #0D0D0D">
+            has entered
+            <!-- Hand-drawn loop highlight -->
+            <svg class="absolute -inset-x-2 -inset-y-1 w-[calc(100%+16px)] h-[calc(100%+8px)] text-ink pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M50 10 C20 10, 5 35, 10 60 C15 85, 45 95, 75 90 C95 85, 95 55, 90 35 C85 15, 60 8, 48 12" class="doodle-path" />
+            </svg>
+          </span>
           <br />
           the chat.
         </h2>
@@ -148,7 +203,7 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Panel 4: Impact -->
-  <section class="relative min-h-screen bg-pink border-b-8 border-ink overflow-hidden flex items-center">
+  <section class="relative min-h-screen bg-pink border-b-8 border-ink overflow-hidden flex items-center bg-grid-light">
     <div class="absolute top-0 left-0 bg-ink text-pink px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
       Chapter 4
     </div>
@@ -161,10 +216,14 @@ import Layout from '../layouts/Layout.astro';
           <div class="comic-caption mb-6 bg-white">
             Heroes on the other side...
           </div>
-          <h2 class="text-5xl sm:text-6xl font-black text-ink leading-none mb-6">
+          <h2 class="text-5xl sm:text-6xl font-black text-ink leading-none mb-6 relative">
             NGOs swoop in
+            <!-- Sketchy zigzag line -->
+            <svg class="absolute bottom-10 left-0 w-64 h-6 text-ink pointer-events-none" viewBox="0 0 200 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 15 L40 5 L70 25 L100 5 L130 25 L160 5 L190 15" class="doodle-path" />
+            </svg>
             <br />
-            <span class="bg-ink text-pink px-2 py-1 inline-block rotate-1">INSTANTLY.</span>
+            <span class="bg-ink text-pink px-2 py-1 inline-block rotate-1 mt-2">INSTANTLY.</span>
           </h2>
           <p class="text-xl text-ink/80 leading-relaxed mb-8">
             Community organizations get real-time alerts for surplus matching their needs.
@@ -198,6 +257,13 @@ import Layout from '../layouts/Layout.astro';
             <div class="absolute -bottom-4 right-0 brutal-badge bg-lime text-ink font-black text-base px-4 py-2 rotate-3 hover:animate-wobble">
               +1,200 rescues!
             </div>
+            <!-- Doodle Arrow pointing up to the badge -->
+            <div class="absolute -bottom-16 right-12 w-16 h-16 text-ink pointer-events-none hidden sm:block">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M30 90 Q40 50 10 30" class="doodle-path" />
+                <path d="M10 50 L10 30 L30 20" class="doodle-path" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -205,7 +271,19 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Panel 5: Stats -->
-  <section class="relative bg-cyan border-b-8 border-ink overflow-hidden">
+  <section class="relative bg-cyan border-b-8 border-ink overflow-hidden bg-grid-light">
+    <!-- Floating background doodles -->
+    <div class="absolute top-36 left-12 text-ink/10 w-20 h-10 pointer-events-none hidden lg:block">
+      <svg viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M10 30 C30 10, 50 50, 70 30 C90 10, 110 50, 115 30" class="doodle-path" />
+      </svg>
+    </div>
+    <div class="absolute bottom-20 right-12 text-ink/10 w-20 h-10 pointer-events-none hidden lg:block rotate-180">
+      <svg viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M10 30 C30 10, 50 50, 70 30 C90 10, 110 50, 115 30" class="doodle-path" />
+      </svg>
+    </div>
+
     <div class="absolute top-0 left-0 bg-ink text-cyan px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
       Chapter 5
     </div>
@@ -258,7 +336,14 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Panel 6: Call to Action -->
-  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center">
+  <section class="relative min-h-screen bg-ink border-b-8 border-lime overflow-hidden flex items-center bg-grid-dark">
+    <!-- Background spiral doodle -->
+    <div class="absolute top-24 right-16 text-lime/5 w-24 h-24 pointer-events-none select-none hidden lg:block">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M50 50 C40 40, 30 60, 50 70 C70 80, 80 40, 50 30 C20 20, 10 70, 50 90 C90 110, 110 30, 50 10" class="doodle-path" />
+      </svg>
+    </div>
+
     <div class="absolute top-0 left-0 bg-lime text-ink px-6 py-3 font-black text-sm uppercase tracking-widest border-r-4 border-b-4 border-ink">
       Your Chapter
     </div>
@@ -271,7 +356,13 @@ import Layout from '../layouts/Layout.astro';
 
         <h2 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white leading-none mb-6 reveal" style="animation-delay:0.1s">
           Write
-          <span class="text-lime">your</span>
+          <span class="relative inline-block text-lime">
+            your
+            <!-- Hand-drawn loop highlight -->
+            <svg class="absolute -inset-x-3 -inset-y-1 w-[calc(100%+24px)] h-[calc(100%+8px)] text-lime pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <path d="M50 10 C20 10, 5 35, 10 60 C15 85, 45 95, 75 90 C95 85, 95 55, 90 35 C85 15, 60 8, 48 12" class="doodle-path" />
+            </svg>
+          </span>
           <br />
           chapter.
         </h2>
@@ -320,10 +411,17 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Category Grid -->
-  <section class="bg-cream border-b-8 border-ink">
+  <section class="bg-cream border-b-8 border-ink bg-grid-light">
     <div class="brutal-section py-16 sm:py-20">
-      <h2 class="text-4xl sm:text-5xl font-black text-center mb-4">
-        Browse by <span class="bg-lime px-2 -rotate-1 inline-block">Category</span>
+      <h2 class="text-4xl sm:text-5xl font-black text-center mb-4 relative inline-block left-1/2 -translate-x-1/2">
+        Browse by 
+        <span class="bg-lime px-2 -rotate-1 inline-block relative mx-1">
+          Category
+          <!-- Rough hand-drawn border doodle around Category -->
+          <svg class="absolute -inset-1.5 w-[calc(100%+12px)] h-[calc(100%+12px)] text-ink pointer-events-none" viewBox="0 0 100 40" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M3 3 L97 3 L97 37 L3 37 Z" class="doodle-path" />
+          </svg>
+        </span>
       </h2>
       <p class="text-center text-ink/60 mb-12 max-w-md mx-auto font-semibold">
         Explore surplus resources by type, rescued from businesses in your area.

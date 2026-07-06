@@ -57,8 +57,6 @@ import Layout from '../layouts/Layout.astro';
               <input x-model="loginPassword" type="password" required placeholder="••••••••" class="brutal-input" />
             </div>
             <button type="submit" :disabled="loading"
-              onclick="if(!this.disabled) navigateTo(event, '', '#ADFF2F')"
-              @click.prevent="handleLogin()"
               class="brutal-btn w-full text-lg font-black" :class="loading?'opacity-60 cursor-wait':''">
               <span x-show="!loading">Sign In</span>
               <span x-show="loading" x-cloak>Signing in...</span>
