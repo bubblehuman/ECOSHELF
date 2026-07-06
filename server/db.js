@@ -1,3 +1,5 @@
+// Need Provider Project Update v2.1
+// Database pool v2.1 — Stable PostgreSQL connection for Need Provider
 import pg from 'pg';
 const { Pool } = pg;
 

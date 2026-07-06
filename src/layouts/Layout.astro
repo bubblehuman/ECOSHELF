@@ -1,5 +1,7 @@
 ---
+// Need Provider Project Update v2.1
 import '../styles/global.css';
+/* Layout v2.1 — Polished spacing, refined ink (#1A1A2E), 3px borders */
 
 interface Props {
   title: string;
@@ -84,7 +86,7 @@ const { title, description = 'Need Provider — Connect surplus and local resour
           left: ox + 'px', top: oy + 'px',
           width: maxDim, height: maxDim,
           background: color,
-          border: '4px solid #0D0D0D',
+          border: '3px solid #1A1A2E',
         });
         document.documentElement.appendChild(el);
 
@@ -103,35 +105,35 @@ const { title, description = 'Need Provider — Connect surplus and local resour
     <nav
       x-data="navbarComponent()"
       x-init="init()"
-      class="sticky top-0 z-50 bg-lime border-b-4 border-ink"
+      class="sticky top-0 z-50 bg-lime border-b-3 border-ink"
     >
       <div class="brutal-section">
-        <div class="flex items-center justify-between h-16 sm:h-20">
+        <div class="flex items-center justify-between h-16 sm:h-[72px]">
 
           <!-- Logo -->
           <button
             onclick="navigateTo(event,'/', '#7DF9FF')"
             class="flex items-center gap-2 group cursor-pointer bg-transparent border-none p-0"
           >
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-ink border-4 border-ink flex items-center justify-center
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-ink border-3 border-ink flex items-center justify-center
                         shadow-brutal-sm group-hover:animate-wobble transition-all text-white font-black">
               N
             </div>
             <span class="text-xl sm:text-2xl font-black tracking-tight text-ink">
-              Need<span class="text-white" style="-webkit-text-stroke:1px #0D0D0D;">Provider</span>
+              Need<span class="text-white" style="-webkit-text-stroke:1px #1A1A2E;">Provider</span>
             </span>
           </button>
 
           <!-- Desktop Nav -->
           <div class="hidden md:flex items-center gap-3">
             <button onclick="navigateTo(event,'/browse','#FFD700')"
-              class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
+              class="px-4 py-2.5 font-bold border-3 border-ink bg-white shadow-brutal-sm
                      hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none
                      transition-all cursor-pointer">
               Contribution HUB
             </button>
             <button onclick="navigateTo(event,'/dashboard','#7DF9FF')"
-              class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
+              class="px-4 py-2.5 font-bold border-3 border-ink bg-white shadow-brutal-sm
                      hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none
                      transition-all cursor-pointer">
               Dashboard
@@ -208,15 +210,15 @@ const { title, description = 'Need Provider — Connect surplus and local resour
     <main class="flex-1"><slot /></main>
 
     <!-- Footer -->
-    <footer class="bg-ink text-white border-t-4 border-ink mt-0">
+    <footer class="bg-ink text-white border-t-3 border-ink mt-0">
       <!-- Zigzag accent -->
       <div class="zigzag"></div>
 
-      <div class="brutal-section py-12">
+      <div class="brutal-section py-16">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div class="sm:col-span-2 lg:col-span-1">
             <div class="flex items-center gap-2 mb-4">
-              <div class="w-10 h-10 bg-lime border-4 border-white flex items-center justify-center text-ink font-black">
+              <div class="w-10 h-10 bg-lime border-3 border-white flex items-center justify-center text-ink font-black">
                 N
               </div>
               <span class="text-xl font-black">Need<span class="text-lime">Provider</span></span>
@@ -309,7 +311,7 @@ const { title, description = 'Need Provider — Connect surplus and local resour
           width: '0px',
           height: '0px',
           background: color || '#ADFF2F',
-          border: '4px solid #0D0D0D',
+          border: '3px solid #1A1A2E',
         });
         document.body.appendChild(overlay);
 

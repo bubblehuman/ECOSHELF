@@ -1,107 +1,127 @@
-/* Need Provider Global Styles */
+/* Need Provider Project Update v2.1 */
+/* Need Provider Global Styles — v2.1 Polished UI Design System */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base */
+/* ── Base ─────────────────────────────────────────────────── */
 @layer base {
   html { scroll-behavior: smooth; }
 
   body {
     @apply font-grotesk antialiased;
     background-color: #FFFDF7;
-    color: #0D0D0D;
+    color: #1A1A2E;
     min-height: 100vh;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
   }
 
   [x-cloak] { display: none !important; }
 
-  ::selection { background: #ADFF2F; color: #0D0D0D; }
+  ::selection { background: #ADFF2F; color: #1A1A2E; }
+
+  /* Smooth base transitions for all interactive elements */
+  a, button, input, select, textarea {
+    transition: all 0.2s ease;
+  }
 }
 
-/* Components */
+/* ── Components ───────────────────────────────────────────── */
 @layer components {
 
-  /* Page section wrapper */
+  /* Page section wrapper — 8px-based max-width with generous horizontal padding */
   .brutal-section {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10;
   }
 
-  /* Neo-Brutalist Cards */
+  /* Neo-Brutalist Cards — refined with softer secondary shadow layer */
   .brutal-card {
-    @apply bg-white transition-all duration-150;
-    border: 4px solid #0D0D0D;
-    box-shadow: 6px 6px 0px #0D0D0D;
+    @apply bg-white transition-all duration-200;
+    border: 3px solid #1A1A2E;
+    box-shadow: 5px 5px 0px #1A1A2E;
   }
   .brutal-card:hover {
-    @apply translate-x-[3px] translate-y-[3px];
-    box-shadow: 0px 0px 0px #0D0D0D;
+    @apply translate-x-[2px] translate-y-[2px];
+    box-shadow: 0px 0px 0px #1A1A2E;
   }
 
-  /* Buttons */
+  /* Buttons — refined spacing with 8px system, smoother transitions */
   .brutal-btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold cursor-pointer select-none transition-all duration-100 hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none;
-    color: #0D0D0D;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold cursor-pointer select-none;
+    color: #1A1A2E;
     background-color: #ADFF2F;
-    border: 4px solid #0D0D0D;
-    box-shadow: 4px 4px 0px #0D0D0D;
+    border: 3px solid #1A1A2E;
+    box-shadow: 4px 4px 0px #1A1A2E;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   }
   .brutal-btn:hover {
-    box-shadow: 0px 0px 0px #0D0D0D;
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px #1A1A2E;
   }
-  
+  .brutal-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+  .brutal-btn:focus-visible {
+    outline: 3px solid #7DF9FF;
+    outline-offset: 2px;
+  }
+
   .brutal-btn-orange { @apply brutal-btn text-white; background-color: #FF6B35; }
   .brutal-btn-yellow { @apply brutal-btn; background-color: #FFD700; }
   .brutal-btn-pink   { @apply brutal-btn text-white; background-color: #FF6EC7; }
   .brutal-btn-cyan   { @apply brutal-btn; background-color: #7DF9FF; }
-  .brutal-btn-black  { @apply brutal-btn; background-color: #0D0D0D; color: #ADFF2F; }
+  .brutal-btn-black  { @apply brutal-btn; background-color: #1A1A2E; color: #ADFF2F; }
   .brutal-btn-white  { @apply brutal-btn bg-white; }
 
-  /* Inputs */
+  /* Inputs — comfortable 12px/16px padding, refined border, focus glow */
   .brutal-input {
-    @apply w-full px-4 py-3 bg-white font-grotesk font-semibold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:ring-0 transition-shadow duration-150;
-    color: #0D0D0D;
-    border: 4px solid #0D0D0D;
+    @apply w-full px-4 py-3.5 bg-white font-grotesk font-medium placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:ring-0;
+    color: #1A1A2E;
+    border: 3px solid #1A1A2E;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .brutal-input:focus {
-    box-shadow: 4px 4px 0px #0D0D0D;
+    box-shadow: 4px 4px 0px #1A1A2E;
+    border-color: #ADFF2F;
   }
-  
+
   .brutal-select {
     @apply brutal-input appearance-none cursor-pointer pr-10;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'20' height%3D'20' viewBox%3D'0 0 24 24' fill%3D'none' stroke%3D'%230D0D0D' stroke-width%3D'3'%3E%3Cpath d%3D'M6 9l6 6 6-6'%2F%3E%3C%2Fsvg%3E");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'20' height%3D'20' viewBox%3D'0 0 24 24' fill%3D'none' stroke%3D'%231A1A2E' stroke-width%3D'3'%3E%3Cpath d%3D'M6 9l6 6 6-6'%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 20px;
   }
 
-  /* Badges */
+  /* Badges — consistent 8px vertical, 12px horizontal */
   .brutal-badge {
     @apply inline-block px-3 py-1 text-xs font-black uppercase tracking-wider;
-    border: 2px solid #0D0D0D;
+    border: 2px solid #1A1A2E;
   }
 
-  /* Comic caption box */
+  /* Comic caption box — refined shadow */
   .comic-caption {
     @apply inline-block px-4 py-2 font-black text-sm uppercase tracking-wide -rotate-1;
     background-color: #FFD700;
-    border: 4px solid #0D0D0D;
-    box-shadow: 4px 4px 0px #0D0D0D;
+    border: 3px solid #1A1A2E;
+    box-shadow: 3px 3px 0px #1A1A2E;
   }
 
-  /* Speech bubble */
+  /* Speech bubble — refined borders */
   .speech-bubble {
     @apply relative bg-white p-4 font-bold;
-    border: 4px solid #0D0D0D;
-    box-shadow: 4px 4px 0px #0D0D0D;
+    border: 3px solid #1A1A2E;
+    box-shadow: 3px 3px 0px #1A1A2E;
   }
   .speech-bubble::after {
     content: '';
     @apply absolute -bottom-5 left-8 w-0 h-0;
     border-left: 12px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 20px solid #0D0D0D;
+    border-top: 20px solid #1A1A2E;
   }
   .speech-bubble::before {
     content: '';
@@ -112,12 +132,12 @@
     z-index: 1;
   }
 
-  /* Zigzag divider */
+  /* Zigzag divider — refined */
   .zigzag {
-    background: linear-gradient(135deg, #0D0D0D 25%, transparent 25%) -10px 0,
-                linear-gradient(225deg, #0D0D0D 25%, transparent 25%) -10px 0,
-                linear-gradient(315deg, #0D0D0D 25%, transparent 25%),
-                linear-gradient(45deg,  #0D0D0D 25%, transparent 25%);
+    background: linear-gradient(135deg, #1A1A2E 25%, transparent 25%) -10px 0,
+                linear-gradient(225deg, #1A1A2E 25%, transparent 25%) -10px 0,
+                linear-gradient(315deg, #1A1A2E 25%, transparent 25%),
+                linear-gradient(45deg,  #1A1A2E 25%, transparent 25%);
     background-size: 20px 20px;
     background-color: #ADFF2F;
     height: 20px;
@@ -125,7 +145,7 @@
   }
 }
 
-/* Page Transition Overlay */
+/* ── Page Transition Overlay ──────────────────────────────── */
 #page-transition-overlay {
   position: fixed;
   border-radius: 50%;
@@ -136,29 +156,29 @@
               height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Scroll reveal */
+/* ── Scroll reveal ────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Cartoon text shadow */
+/* ── Cartoon text shadow ──────────────────────────────────── */
 .text-stroke {
-  -webkit-text-stroke: 2px #0D0D0D;
+  -webkit-text-stroke: 2px #1A1A2E;
   paint-order: stroke fill;
 }
 
-/* Marquee ticker */
+/* ── Marquee ticker ───────────────────────────────────────── */
 .ticker-wrap {
   overflow: hidden;
-  border-top: 4px solid #0D0D0D;
-  border-bottom: 4px solid #0D0D0D;
-  background: #0D0D0D;
+  border-top: 3px solid #1A1A2E;
+  border-bottom: 3px solid #1A1A2E;
+  background: #1A1A2E;
 }
 .ticker-track {
   display: flex;
@@ -166,22 +186,22 @@
   animation: marquee 25s linear infinite;
 }
 
-/* Background grid patterns */
+/* ── Background grid patterns ─────────────────────────────── */
 .bg-grid-light {
-  background-image: 
-    linear-gradient(to right, rgba(13, 13, 13, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(13, 13, 13, 0.05) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(26, 26, 46, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 26, 46, 0.04) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .bg-grid-dark {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Organic hand-drawn/doodle styles and animations */
+/* ── Organic hand-drawn doodle animations ─────────────────── */
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px) rotate(-1deg); }
   50% { transform: translateY(-8px) rotate(2deg); }
@@ -219,3 +239,8 @@
   }
 }
 
+/* ── Focus-visible utility for keyboard accessibility ─────── */
+*:focus-visible {
+  outline: 3px solid #7DF9FF;
+  outline-offset: 2px;
+}

@@ -1,4 +1,6 @@
+// Need Provider Project Update v2.1
 /** @type {import('tailwindcss').Config} */
+/* Need Provider — Tailwind Design Tokens v2.1 */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
@@ -10,18 +12,22 @@ export default {
         pink:   '#FF6EC7',
         cyan:   '#7DF9FF',
         cream:  '#FFFDF7',
-        ink:    '#0D0D0D',
+        ink:    '#1A1A2E',
       },
       fontFamily: {
         grotesk: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
       },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+      },
       boxShadow: {
-        brutal:       '6px 6px 0px #0D0D0D',
-        'brutal-sm':  '4px 4px 0px #0D0D0D',
-        'brutal-lg':  '10px 10px 0px #0D0D0D',
-        'brutal-xl':  '14px 14px 0px #0D0D0D',
-        'brutal-inv': '6px 6px 0px #ADFF2F',
-        'brutal-none':'0px 0px 0px #0D0D0D',
+        brutal:       '5px 5px 0px #1A1A2E',
+        'brutal-sm':  '3px 3px 0px #1A1A2E',
+        'brutal-lg':  '8px 8px 0px #1A1A2E',
+        'brutal-xl':  '12px 12px 0px #1A1A2E',
+        'brutal-inv': '5px 5px 0px #ADFF2F',
+        'brutal-none':'0px 0px 0px #1A1A2E',
       },
       keyframes: {
         wobble: {

@@ -1,3 +1,4 @@
+-- Need Provider Project Update v2.1
 -- ============================================================
 -- NEED PROVIDER — Local PostgreSQL Schema
 -- Adapted from Supabase schema for standalone PostgreSQL

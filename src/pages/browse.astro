@@ -1,29 +1,31 @@
 ---
+// Need Provider Project Update v2.1
 import Layout from '../layouts/Layout.astro';
+/* Browse page v2.1 — Polished spacing, refined visual hierarchy */
 ---
 
 <Layout title="Contribution HUB">
-  <section class="brutal-section py-8 sm:py-12">
+  <section class="brutal-section py-10 sm:py-16">
     <div x-data="browseComponent()" x-init="init()">
 
       <!-- Page Header -->
-      <div class="mb-10">
+      <div class="mb-12">
         <div class="comic-caption inline-block mb-4">Live Contribution Feed</div>
         <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black mb-2">
           Contribution
           <span class="bg-lime px-2 py-1 inline-block -rotate-1">HUB</span>
         </h1>
-        <p class="text-ink/60 font-semibold text-lg">
+        <p class="text-ink/50 font-medium text-lg leading-relaxed">
           Browse community resources. Claim what you need or donate surplus!
         </p>
       </div>
 
       <!-- Filter Bar -->
-      <div class="brutal-card bg-white p-4 flex flex-wrap gap-3 mb-8">
+      <div class="brutal-card bg-white p-4 flex flex-wrap gap-3 mb-10">
         <template x-for="f in filters" :key="f.id">
           <button
             @click="activeCategory=f.id; fetchListings()"
-            class="px-5 py-2 font-black uppercase text-sm border-4 border-ink transition-all duration-100 hover:animate-wobble"
+            class="px-5 py-2.5 font-bold uppercase text-sm border-3 border-ink transition-all duration-150 hover:animate-wobble"
             :class="activeCategory===f.id
               ? 'translate-x-[2px] translate-y-[2px] shadow-none'
               : 'shadow-brutal-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-brutal-hover'"
