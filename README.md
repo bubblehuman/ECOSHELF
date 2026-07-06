@@ -9,12 +9,13 @@ Eco Shelf connects local businesses with surplus inventory (groceries, restauran
 ## 🛠 Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+|---|---|
 | **Pages & Routing** | [Astro](https://astro.build) (SSG) |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com) — Neo-Brutalism theme |
 | **Interactivity** | [Alpine.js](https://alpinejs.dev) (CDN) |
-| **Backend** | [Supabase](https://supabase.com) (Auth + Postgres + RLS) |
-| **Deploy** | Netlify / Vercel (Static) |
+| **Backend API** | Node.js with [Express.js](https://expressjs.com) |
+| **Database** | [PostgreSQL 16](https://www.postgresql.org) (Dockerized) |
+| **Authentication** | Custom JWT + Bcrypt password hashing |
 
 ---
 
@@ -24,16 +25,28 @@ Eco Shelf connects local businesses with surplus inventory (groceries, restauran
 ECOSHELF/
 ├── astro.config.mjs
 ├── tailwind.config.mjs
-├── package.json
+├── package.json            # Frontend package details
+├── docker-compose.yml      # Local PostgreSQL configuration
 ├── supabase/
-│   └── schema.sql          # SQL schema + RLS policies
+│   ├── schema.sql          # Original Supabase schema (for reference)
+│   └── schema-local.sql    # Local PostgreSQL schema (adapted)
+├── server/                 # Express.js REST API
+│   ├── package.json
+│   ├── index.js            # Server entrypoint
+│   ├── db.js               # pg Pool connection
+│   ├── middleware/
+│   │   └── auth.js         # JWT auth middleware
+│   └── routes/
+│       ├── auth.js         # Auth routes (signup, login, me)
+│       ├── profiles.js     # User profiles CRUD
+│       └── listings.js     # Marketplace listings CRUD & claiming
 ├── public/
 │   └── favicon.svg
 ├── src/
 │   ├── styles/
 │   │   └── global.css      # Tailwind + Neo-Brutalism tokens
 │   ├── layouts/
-│   │   └── Layout.astro    # Base layout, navbar, footer
+│   │   └── Layout.astro    # Base layout & API fetch wrapper
 │   └── pages/
 │       ├── index.astro     # Landing page
 │       ├── auth.astro      # Login / Register
@@ -43,36 +56,65 @@ ECOSHELF/
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (How to Run Locally)
 
-### 1. Install dependencies
+Follow these steps to set up and run the project on your machine.
+
+### Prerequisites
+
+*   **Node.js** (v18+)
+*   **Docker** and **Docker Compose**
+
+---
+
+### 1. Setup the Database
+
+Spin up the local PostgreSQL database using Docker Compose. On systems with SELinux (like Fedora), the `:z` flag is automatically configured to handle file permissions.
 
 ```bash
+docker compose up -d
+```
+
+*Note: This automatically initializes the database schema from `supabase/schema-local.sql` on the first run.*
+
+---
+
+### 2. Configure Environment Variables
+
+The backend relies on the configuration inside `server/.env`. By default, it comes preconfigured with:
+
+```env
+DATABASE_URL=postgresql://ecoshelf_user:ecoshelf_dev_pass@localhost:5432/ecoshelf
+JWT_SECRET=ecoshelf-dev-jwt-secret-change-me-in-production
+PORT=3001
+CORS_ORIGIN=http://localhost:4321
+```
+
+---
+
+### 3. Start the Backend API
+
+Install backend dependencies and start the API server:
+
+```bash
+cd server
 npm install
+npm run dev # Runs server at http://localhost:3001
 ```
 
-### 2. Configure Supabase
+---
 
-1. Create a [Supabase](https://supabase.com) project.
-2. Run the SQL in `supabase/schema.sql` in the Supabase SQL Editor.
-3. Update `src/layouts/Layout.astro` with your **Supabase URL** and **Anon Key**:
+### 4. Start the Frontend (Astro)
 
-```js
-window.SUPABASE_URL = 'https://your-project.supabase.co';
-window.SUPABASE_ANON_KEY = 'your-anon-key-here';
-```
-
-### 3. Start development server
+In a new terminal window, return to the root folder, install the frontend dependencies, and start the development server:
 
 ```bash
-npm run dev
+cd ..
+npm install
+npm run dev # Runs app at http://localhost:4321
 ```
 
-### 4. Build for production
-
-```bash
-npm run build
-```
+Open [http://localhost:4321](http://localhost:4321) in your browser to interact with the application.
 
 ---
 
