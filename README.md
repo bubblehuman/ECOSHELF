@@ -60,10 +60,65 @@ ECOSHELF/
 
 Follow these steps to set up and run the project on your machine.
 
-### Prerequisites
+### Prerequisites & Installation Guide
 
-*   **Node.js** (v18+)
-*   **Docker** and **Docker Compose**
+This project requires **Node.js** (v18+) and either **Docker** (recommended) or a local **PostgreSQL** installation.
+
+#### 1. Installing Node.js
+If you don't have Node.js installed, we recommend using [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm):
+*   **Linux/macOS:**
+    ```bash
+    curl -fsSL https://fnm.vercel.app/install | bash
+    # Restart your shell, then install node:
+    fnm install --lts
+    ```
+*   **Windows:** Use the installer from the [Node.js Official Website](https://nodejs.org/).
+
+#### 2. Option A: Running with Docker (Recommended)
+Docker runs PostgreSQL automatically in a container without manual system setup.
+*   **Fedora/RHEL:**
+    ```bash
+    sudo dnf install dnf-plugins-core -y
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    sudo systemctl enable --now docker
+    sudo usermod -aG docker $USER # Logout and log back in for changes to apply
+    ```
+*   **Ubuntu/Debian:**
+    ```bash
+    sudo apt update
+    sudo apt install docker.io docker-compose-v2 -y
+    sudo systemctl enable --now docker
+    sudo usermod -aG docker $USER # Logout and log back in
+    ```
+*   **macOS / Windows:** Install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+#### 3. Option B: Running with a Bare-metal PostgreSQL (Alternative)
+If you prefer not to use Docker and install PostgreSQL directly on your host:
+*   **Fedora:**
+    ```bash
+    sudo dnf install postgresql-server postgresql-contrib -y
+    sudo postgresql-setup --initdb
+    sudo systemctl enable --now postgresql
+    ```
+*   **Ubuntu/Debian:**
+    ```bash
+    sudo apt update
+    sudo apt install postgresql postgresql-contrib -y
+    sudo systemctl enable --now postgresql
+    ```
+*   **Create Local Database & User:**
+    1. Open the postgres console: `sudo -u postgres psql`
+    2. Create user, set password, and create database:
+       ```sql
+       CREATE USER ecoshelf_user WITH PASSWORD 'ecoshelf_dev_pass';
+       CREATE DATABASE ecoshelf OWNER ecoshelf_user;
+       \q
+       ```
+    3. Import the local schema:
+       ```bash
+       psql -U ecoshelf_user -d ecoshelf -h localhost -f supabase/schema-local.sql
+       ```
 
 ---
 
