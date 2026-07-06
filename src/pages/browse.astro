@@ -2,19 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Browse Marketplace">
+<Layout title="Contribution HUB">
   <section class="brutal-section py-8 sm:py-12">
     <div x-data="browseComponent()" x-init="init()">
 
       <!-- Page Header -->
       <div class="mb-10">
-        <div class="comic-caption inline-block mb-4">Live Surplus Feed</div>
+        <div class="comic-caption inline-block mb-4">Live Contribution Feed</div>
         <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black mb-2">
-          Marketplace
-          <span class="bg-lime px-2 py-1 inline-block -rotate-1">Feed</span>
+          Contribution
+          <span class="bg-lime px-2 py-1 inline-block -rotate-1">HUB</span>
         </h1>
         <p class="text-ink/60 font-semibold text-lg">
-          Browse surplus resources. Claim before they expire!
+          Browse community resources. Claim what you need or donate surplus!
         </p>
       </div>
 
@@ -174,17 +174,18 @@ import Layout from '../layouts/Layout.astro';
       listings: [], loading: true,
       claimingId: null, claimModal: false, claimToken: '',
       filters: [
-        { id:'all',        label:'All',        color:'#0D0D0D', textColor:'#ADFF2F' },
-        { id:'grocery',    label:'Grocery',    color:'#ADFF2F', textColor:'#0D0D0D' },
-        { id:'restaurant', label:'Restaurant', color:'#FFD700', textColor:'#0D0D0D' },
-        { id:'furniture',  label:'Furniture',  color:'#7DF9FF', textColor:'#0D0D0D' },
-        { id:'hotel',      label:'Hotel',      color:'#FF6EC7', textColor:'#0D0D0D' },
+        { id:'all',                    label:'All',                    color:'#0D0D0D', textColor:'#ADFF2F' },
+        { id:'clothes',                label:'Clothes',                color:'#ADFF2F', textColor:'#0D0D0D' },
+        { id:'shelter',                label:'Shelter',                color:'#FFD700', textColor:'#0D0D0D' },
+        { id:'books',                  label:'Books',                  color:'#7DF9FF', textColor:'#0D0D0D' },
+        { id:'educational_facilities', label:'Educational',            color:'#FF6EC7', textColor:'#0D0D0D' },
+        { id:'food',                   label:'Food',                   color:'#FF9800', textColor:'#0D0D0D' },
       ],
 
       async init() {
         const params = new URLSearchParams(window.location.search);
         const cat = params.get('category');
-        if (cat && ['grocery','restaurant','furniture','hotel'].includes(cat)) this.activeCategory = cat;
+        if (cat && ['clothes','shelter','books','educational_facilities','food'].includes(cat)) this.activeCategory = cat;
         await this.fetchListings();
       },
 
@@ -205,7 +206,7 @@ import Layout from '../layouts/Layout.astro';
         this.claimingId = listing.id;
         try {
           await window.apiFetch('/listings/' + listing.id + '/claim', { method: 'PATCH' });
-          this.claimToken = 'ECO-'+listing.id.substring(0,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
+          this.claimToken = 'NDP-'+listing.id.substring(0,8).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
           this.claimModal = true;
           listing.status = 'claimed';
         } catch(e) { alert('Failed: '+(e.message||'An error occurred.')); }
@@ -213,7 +214,7 @@ import Layout from '../layouts/Layout.astro';
       },
 
       getCategoryColor(cat) {
-        return { grocery:'#ADFF2F', restaurant:'#FFD700', furniture:'#7DF9FF', hotel:'#FF6EC7' }[cat]||'#E5E5E5';
+        return { clothes:'#ADFF2F', shelter:'#FFD700', books:'#7DF9FF', educational_facilities:'#FF6EC7', food:'#FF9800' }[cat]||'#E5E5E5';
       },
       getTimeLeft(t) {
         const diff = new Date(t)-new Date();

@@ -15,18 +15,16 @@ import Layout from '../layouts/Layout.astro';
           Chapter 1: The Crisis
         </div>
 
-        <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black text-white leading-none mb-6 reveal" style="animation-delay:0.1s">
-          Every day,<br />
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-6 reveal" style="animation-delay:0.1s">
+          Don't Let Good Food Go to Waste—<br />
           <span class="text-lime" style="-webkit-text-stroke:2px #ADFF2F; color:#ADFF2F">
-            1.3 BILLION
+            It Can Be
           </span><br />
-          <span class="text-white">tons of food</span><br />
-          <span class="text-orange">goes to waste.</span>
+          <span class="text-orange">Someone's Next Meal.</span>
         </h1>
 
         <p class="text-xl sm:text-2xl text-gray-300 max-w-2xl mb-10 leading-relaxed reveal" style="animation-delay:0.2s">
-          While supermarkets throw out <strong class="text-yellow">perfectly good food</strong>, families go hungry
-          and NGOs scramble for resources. The gap is <strong class="text-orange">criminal.</strong>
+          Don't let good food go to waste. Donate surplus food to help someone in need. Every meal shared reduces hunger and spreads kindness. Together, we can make a meaningful difference.
         </p>
 
         <!-- CTA buttons -->
@@ -41,7 +39,7 @@ import Layout from '../layouts/Layout.astro';
             onclick="navigateTo(event, '/browse', '#FFD700')"
             class="brutal-btn-yellow text-lg px-8 py-4 text-xl font-black hover:animate-wobble"
           >
-            Browse Surplus Now
+            Contribution HUB
           </button>
         </div>
       </div>
@@ -122,12 +120,12 @@ import Layout from '../layouts/Layout.astro';
         <!-- Huge hero logo stamp -->
         <div class="reveal mb-6" style="animation-delay:0.1s">
           <div class="inline-block bg-ink border-4 border-ink p-8 shadow-brutal-xl -rotate-2 hover:rotate-0 transition-transform duration-300">
-            <span class="text-8xl sm:text-[10rem] font-black text-white">E</span>
+            <span class="text-8xl sm:text-[10rem] font-black text-white">N</span>
           </div>
         </div>
 
         <h2 class="text-6xl sm:text-8xl font-black text-ink leading-none mb-6 reveal" style="animation-delay:0.15s">
-          EcoShelf
+          Need Provider
           <br />
           <span class="text-white" style="-webkit-text-stroke:3px #0D0D0D">has entered</span>
           <br />
@@ -135,8 +133,7 @@ import Layout from '../layouts/Layout.astro';
         </h2>
 
         <p class="text-xl sm:text-2xl text-ink/80 max-w-2xl mx-auto mb-8 leading-relaxed reveal" style="animation-delay:0.2s">
-          A <strong>hyperlocal marketplace</strong> that lets retailers instantly list surplus goods
-          at ultra-low prices — and automatically alerts nearby NGOs to claim them.
+          Have something you no longer need? Donate food, clothes, books, or other useful items to people who need them most. Every small contribution creates a big impact.
         </p>
 
         <!-- Feature pills -->
@@ -332,26 +329,31 @@ import Layout from '../layouts/Layout.astro';
         Explore surplus resources by type, rescued from businesses in your area.
       </p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <button onclick="navigateTo(event,'/browse?category=grocery','#ADFF2F')"
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <button onclick="navigateTo(event,'/browse?category=clothes','#ADFF2F')"
           class="brutal-card p-8 text-center bg-white group hover:bg-lime cursor-pointer w-full reveal hover:animate-wobble">
-          <h3 class="text-2xl font-black mb-2">Groceries</h3>
-          <p class="text-ink/60 text-sm">Fresh produce nearing best-by dates</p>
+          <h3 class="text-2xl font-black mb-2">Clothes</h3>
+          <p class="text-ink/60 text-sm">Gently used clothes for all ages</p>
         </button>
-        <button onclick="navigateTo(event,'/browse?category=restaurant','#FFD700')"
+        <button onclick="navigateTo(event,'/browse?category=shelter','#FFD700')"
           class="brutal-card p-8 text-center bg-white group hover:bg-yellow cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.1s">
-          <h3 class="text-2xl font-black mb-2">Restaurants</h3>
-          <p class="text-ink/60 text-sm">Prepared meals & catering surplus</p>
+          <h3 class="text-2xl font-black mb-2">Shelter</h3>
+          <p class="text-ink/60 text-sm">Temporary housing & safety spaces</p>
         </button>
-        <button onclick="navigateTo(event,'/browse?category=furniture','#7DF9FF')"
+        <button onclick="navigateTo(event,'/browse?category=books','#7DF9FF')"
           class="brutal-card p-8 text-center bg-white group hover:bg-cyan cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.2s">
-          <h3 class="text-2xl font-black mb-2">Furniture</h3>
-          <p class="text-ink/60 text-sm">Display models & overstock items</p>
+          <h3 class="text-2xl font-black mb-2">Books</h3>
+          <p class="text-ink/60 text-sm">Educational and reading resources</p>
         </button>
-        <button onclick="navigateTo(event,'/browse?category=hotel','#FF6EC7')"
+        <button onclick="navigateTo(event,'/browse?category=educational_facilities','#FF6EC7')"
           class="brutal-card p-8 text-center bg-white group hover:bg-pink cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.3s">
-          <h3 class="text-2xl font-black mb-2">Hotels</h3>
-          <p class="text-ink/60 text-sm">Linens, toiletries & buffet surplus</p>
+          <h3 class="text-2xl font-black mb-2">Educational</h3>
+          <p class="text-ink/60 text-sm">Study centers, equipment & classes</p>
+        </button>
+        <button onclick="navigateTo(event,'/browse?category=food','#FF9800')"
+          class="brutal-card p-8 text-center bg-white group hover:bg-orange cursor-pointer w-full reveal hover:animate-wobble" style="animation-delay:0.4s">
+          <h3 class="text-2xl font-black mb-2">Food</h3>
+          <p class="text-ink/60 text-sm">Surplus groceries, meals, and support</p>
         </button>
       </div>
     </div>

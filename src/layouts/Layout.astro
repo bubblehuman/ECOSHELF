@@ -5,7 +5,7 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Eco Shelf — Smart surplus marketplace connecting local retailers with NGOs to reduce waste.' } = Astro.props;
+const { title, description = 'Need Provider — Connect surplus and local resources with those in need.' } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,7 +18,7 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>{title} | EcoShelf</title>
+    <title>{title} | Need Provider</title>
 
     <!-- API Helpers (replaces Supabase SDK) -->
     <script is:inline>
@@ -115,10 +115,10 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
           >
             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-ink border-4 border-ink flex items-center justify-center
                         shadow-brutal-sm group-hover:animate-wobble transition-all text-white font-black">
-              E
+              N
             </div>
             <span class="text-xl sm:text-2xl font-black tracking-tight text-ink">
-              Eco<span class="text-white" style="-webkit-text-stroke:1px #0D0D0D;">Shelf</span>
+              Need<span class="text-white" style="-webkit-text-stroke:1px #0D0D0D;">Provider</span>
             </span>
           </button>
 
@@ -128,7 +128,7 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
               class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
                      hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none
                      transition-all cursor-pointer">
-              Browse
+              Contribution HUB
             </button>
             <button onclick="navigateTo(event,'/dashboard','#7DF9FF')"
               class="px-4 py-2 font-black border-4 border-ink bg-white shadow-brutal-sm
@@ -176,7 +176,7 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
           <button onclick="navigateTo(event,'/browse','#FFD700')"
             class="block w-full px-4 py-3 font-black border-4 border-ink bg-yellow text-center shadow-brutal-sm
                    hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-            Browse Listings
+            Contribution HUB
           </button>
           <button onclick="navigateTo(event,'/dashboard','#7DF9FF')"
             class="block w-full px-4 py-3 font-black border-4 border-ink bg-cyan text-center shadow-brutal-sm
@@ -217,18 +217,18 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
           <div class="sm:col-span-2 lg:col-span-1">
             <div class="flex items-center gap-2 mb-4">
               <div class="w-10 h-10 bg-lime border-4 border-white flex items-center justify-center text-ink font-black">
-                E
+                N
               </div>
-              <span class="text-xl font-black">Eco<span class="text-lime">Shelf</span></span>
+              <span class="text-xl font-black">Need<span class="text-lime">Provider</span></span>
             </div>
             <p class="text-gray-400 text-sm leading-relaxed">
-              Bridging retail surplus and community need. Reducing waste, one listing at a time.
+              Bridging resources and community need. Sharing more, wasting less.
             </p>
           </div>
           <div>
             <h4 class="font-black text-lg mb-4 text-lime uppercase">Quick Links</h4>
             <ul class="space-y-2 text-sm">
-              <li><button onclick="navigateTo(event,'/browse','#FFD700')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Browse Marketplace</button></li>
+              <li><button onclick="navigateTo(event,'/browse','#FFD700')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Contribution HUB</button></li>
               <li><button onclick="navigateTo(event,'/dashboard','#7DF9FF')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Dashboard</button></li>
               <li><button onclick="navigateTo(event,'/auth','#FF6EC7')" class="text-gray-400 hover:text-lime transition-colors bg-transparent border-none cursor-pointer">Login / Register</button></li>
             </ul>
@@ -237,20 +237,20 @@ const { title, description = 'Eco Shelf — Smart surplus marketplace connecting
             <h4 class="font-black text-lg mb-4 text-yellow uppercase">For Businesses</h4>
             <ul class="space-y-2 text-sm">
               <li><button onclick="navigateTo(event,'/auth','#FFD700')" class="text-gray-400 hover:text-yellow transition-colors bg-transparent border-none cursor-pointer">Register as Retailer</button></li>
-              <li><button onclick="navigateTo(event,'/dashboard','#FFD700')" class="text-gray-400 hover:text-yellow transition-colors bg-transparent border-none cursor-pointer">List Surplus</button></li>
+              <li><button onclick="navigateTo(event,'/dashboard','#FFD700')" class="text-gray-400 hover:text-yellow transition-colors bg-transparent border-none cursor-pointer">List Contribution</button></li>
             </ul>
           </div>
           <div>
             <h4 class="font-black text-lg mb-4 text-orange uppercase">For NGOs</h4>
             <ul class="space-y-2 text-sm">
               <li><button onclick="navigateTo(event,'/auth','#FF6B35')" class="text-gray-400 hover:text-orange transition-colors bg-transparent border-none cursor-pointer">Register as NGO</button></li>
-              <li><button onclick="navigateTo(event,'/browse','#FF6B35')" class="text-gray-400 hover:text-orange transition-colors bg-transparent border-none cursor-pointer">Browse Items</button></li>
+              <li><button onclick="navigateTo(event,'/browse','#FF6B35')" class="text-gray-400 hover:text-orange transition-colors bg-transparent border-none cursor-pointer">Contribution HUB</button></li>
             </ul>
           </div>
         </div>
         <div class="mt-10 pt-6 border-t-2 border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p class="text-gray-400 text-sm">&copy; 2026 EcoShelf. Built for a sustainable future.</p>
-          <div class="comic-caption text-xs">Zero waste. Maximum impact.</div>
+          <p class="text-gray-400 text-sm">&copy; 2026 Need Provider. Built for a supportive future.</p>
+          <div class="comic-caption text-xs">Zero hunger. Maximum support.</div>
         </div>
       </div>
     </footer>

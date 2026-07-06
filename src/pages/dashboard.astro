@@ -84,10 +84,11 @@ import Layout from '../layouts/Layout.astro';
                     <label class="block font-black text-sm uppercase tracking-wider mb-2">Category</label>
                     <select x-model="newListing.category" required class="brutal-select">
                       <option value="" disabled>Pick a category...</option>
-                      <option value="grocery">Grocery</option>
-                      <option value="restaurant">Restaurant</option>
-                      <option value="furniture">Furniture</option>
-                      <option value="hotel">Hotel</option>
+                      <option value="clothes">Clothes</option>
+                      <option value="shelter">Shelter</option>
+                      <option value="books">Books</option>
+                      <option value="educational_facilities">Educational Facilities</option>
+                      <option value="food">Food</option>
                     </select>
                   </div>
 
@@ -411,12 +412,13 @@ import Layout from '../layouts/Layout.astro';
       newListing: { title:'', category:'', original_price:'', surplus_price:'', expiryHours:'', description:'' },
       submitting: false, formSuccess: '', formError: '',
       myListings: [], inventoryLoading: false,
-      searchRadius: 5, alertCategories: ['grocery'], alertMethod: 'email', alertSaved: false,
+      searchRadius: 5, alertCategories: ['food'], alertMethod: 'email', alertSaved: false,
       alertOptions: [
-        { id:'grocery',    label:'Groceries'   },
-        { id:'restaurant', label:'Restaurants' },
-        { id:'furniture',  label:'Furniture'   },
-        { id:'hotel',      label:'Hotels'      },
+        { id:'clothes',                label:'Clothes' },
+        { id:'shelter',                label:'Shelter' },
+        { id:'books',                  label:'Books' },
+        { id:'educational_facilities', label:'Educational' },
+        { id:'food',                   label:'Food' },
       ],
       claimedRescues: [], rescuesLoading: false, totalSaved: 0, uniqueRetailers: 0,
 
@@ -502,7 +504,7 @@ import Layout from '../layouts/Layout.astro';
       },
 
       getCategoryColor(cat) {
-        return { grocery:'#ADFF2F', restaurant:'#FFD700', furniture:'#7DF9FF', hotel:'#FF6EC7' }[cat]||'#E5E5E5';
+        return { clothes:'#ADFF2F', shelter:'#FFD700', books:'#7DF9FF', educational_facilities:'#FF6EC7', food:'#FF9800' }[cat]||'#E5E5E5';
       },
       formatDate(d) {
         if (!d) return 'N/A';

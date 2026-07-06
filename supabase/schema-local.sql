@@ -1,5 +1,5 @@
 -- ============================================================
--- ECO SHELF — Local PostgreSQL Schema
+-- NEED PROVIDER — Local PostgreSQL Schema
 -- Adapted from Supabase schema for standalone PostgreSQL
 -- ============================================================
 
@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- ============================================================
 
 CREATE TYPE user_type AS ENUM ('retailer', 'ngo');
-CREATE TYPE listing_category AS ENUM ('grocery', 'restaurant', 'furniture', 'hotel');
+CREATE TYPE listing_category AS ENUM ('clothes', 'shelter', 'books', 'educational_facilities', 'food');
 CREATE TYPE listing_status AS ENUM ('available', 'claimed');
 
 
@@ -77,5 +77,5 @@ CREATE INDEX idx_listings_claimed_by ON listings(claimed_by);
 
 
 -- ============================================================
--- DONE — Schema ready for local Eco Shelf
+-- DONE — Schema ready for local Need Provider
 -- ============================================================
